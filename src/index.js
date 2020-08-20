@@ -5,10 +5,17 @@ import { Routes } from './Routes';
 import Navigation from './components/Navigation/Navigation';
 import * as serviceWorker from './serviceWorker';
 
+import ProductsContextProvider from './context/ProductContext';
+import CartContextProvider from './context/CartContext';
+
 ReactDOM.render(
   <React.StrictMode>
-    <Navigation />
-    <Routes />
+    <ProductsContextProvider>
+      <CartContextProvider>
+        <Navigation />
+        <Routes />
+      </CartContextProvider>
+    </ProductsContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
