@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { Nav, Navbar } from 'react-bootstrap';
-import { Layout } from '../Layout/Layout';
+import Layout from '../Layout/Layout';
 import { CartIcon } from '../Icons/Icons';
 
 const Navigation = () => {
