@@ -2,16 +2,12 @@ import React, { useContext } from 'react';
 import { PlusIcon, MinusIcon, TrashIcon } from '../../components/Icons/Icons';
 import { CartContext } from '../../context/CartContext';
 import formatCurrency from '../FormatCurrency/FormatCurrency';
-import SetImg from '../SetImg/SetImg';
+
 
 const CartItem = ({product}) => {
 
     const { increase, decrease, removeProduct } = useContext(CartContext);
     const iconSize = '20';
-    const imgStyle = {
-        margin: "0 auto", 
-        maxHeight: "50px"
-    };
 
     const smIconStyle = {
         position: 'relative',
