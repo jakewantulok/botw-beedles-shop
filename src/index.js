@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import { Routes } from './Routes';
-import Navigation from './components/Navigation/Navigation';
+import Navigation from './components/Navigation';
 import * as serviceWorker from './serviceWorker';
 
 import ProductsContextProvider from './context/ProductContext';

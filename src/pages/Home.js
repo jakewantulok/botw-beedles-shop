@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../components/Layout/Layout';
-import ProductsGrid from '../components/ProductGrid/ProductGrid';
+import Layout from '../components/Layout';
+import ProductsGrid from '../components/ProductGrid';
 
 export const Home = () => (
 	<Layout title="Store" description="This is the Store page">

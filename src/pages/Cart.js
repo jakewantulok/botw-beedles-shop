@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/Layout';
 import { CartContext } from '../context/CartContext';
-import FormatCurrency from '../components/FormatCurrency/FormatCurrency';
+import FormatCurrency from '../components/FormatCurrency';
 import { Link } from 'react-router-dom';
-import CartProducts from '../components/CartProducts/CartProducts';
+import CartProducts from '../components/CartProducts';
 
 export const Cart = () => {
 	const { total, cartItems, itemCount, clearCart, checkout, handleCheckout } = useContext(
