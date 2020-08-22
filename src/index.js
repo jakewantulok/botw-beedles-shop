@@ -9,15 +9,15 @@ import ProductsContextProvider from './context/ProductContext';
 import CartContextProvider from './context/CartContext';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ProductsContextProvider>
-      <CartContextProvider>
-        <Navigation />
-        <Routes />
-      </CartContextProvider>
-    </ProductsContextProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<ProductsContextProvider>
+			<CartContextProvider>
+				<Navigation />
+				<Routes />
+			</CartContextProvider>
+		</ProductsContextProvider>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

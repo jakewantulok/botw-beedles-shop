@@ -4,50 +4,51 @@ import { CartReducer, sumItems } from './CartReducer';
 export const CartContext = createContext();
 
 const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
-const productStorage = localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : [];
-const initialState = { cartItems: storage, viewItem: productStorage, ...sumItems(storage), checkout: false };
-
-const CartContextProvider = ({children}) => {
-
-    const [state, dispatch] = useReducer(CartReducer, initialState);
-
-    const increase = payload => dispatch({type: 'INCREASE', payload});
-
-    const decrease = payload => dispatch({type: 'DECREASE', payload});
-
-    const addProduct = payload => dispatch({type: 'ADD_ITEM', payload});
-
-    const viewProduct = payload => dispatch({type: 'VIEW_ITEM', payload});
-
-    const removeProduct = payload => dispatch({type: 'REMOVE_ITEM', payload});
-
-    const clearCart = () => dispatch({type: 'CLEAR'});
-
-    const resetCheckout = () => dispatch({type: 'RESET'});
-
-    const handleCheckout = () => {
-        console.log('CHECKOUT', state);
-        dispatch({type: 'CHECKOUT'});
-    };
-
-    const contextValues = {
-        removeProduct,
-        addProduct,
-        viewProduct,
-        increase,
-        decrease,
-        clearCart,
-        resetCheckout,
-        handleCheckout,
-        ...state
-    };
-
-    return ( 
-        <CartContext.Provider value={contextValues} >
-            { children }
-        </CartContext.Provider>
-     );
+const productStorage = localStorage.getItem('product')
+	? JSON.parse(localStorage.getItem('product'))
+	: [];
+const initialState = {
+	cartItems: storage,
+	viewItem: productStorage,
+	...sumItems(storage),
+	checkout: false,
 };
- 
-export default CartContextProvider;
 
+const CartContextProvider = ({ children }) => {
+	const [state, dispatch] = useReducer(CartReducer, initialState);
+
+	const increase = payload => dispatch({ type: 'INCREASE', payload });
+
+	const decrease = payload => dispatch({ type: 'DECREASE', payload });
+
+	const addProduct = payload => dispatch({ type: 'ADD_ITEM', payload });
+
+	const viewProduct = payload => dispatch({ type: 'VIEW_ITEM', payload });
+
+	const removeProduct = payload => dispatch({ type: 'REMOVE_ITEM', payload });
+
+	const clearCart = () => dispatch({ type: 'CLEAR' });
+
+	const resetCheckout = () => dispatch({ type: 'RESET' });
+
+	const handleCheckout = () => {
+		console.log('CHECKOUT', state);
+		dispatch({ type: 'CHECKOUT' });
+	};
+
+	const contextValues = {
+		removeProduct,
+		addProduct,
+		viewProduct,
+		increase,
+		decrease,
+		clearCart,
+		resetCheckout,
+		handleCheckout,
+		...state,
+	};
+
+	return <CartContext.Provider value={contextValues}>{children}</CartContext.Provider>;
+};
+
+export default CartContextProvider;
