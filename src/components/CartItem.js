@@ -14,6 +14,9 @@ const CartItem = ({ product }) => {
 		paddingLeft: 10,
 	};
 
+	const add = () => increase(product);
+	const subtract = () => decrease(product);
+
 	return (
 		<div className="row no-gutters py-2">
 			<div className="col-sm-2 p-2">
@@ -34,14 +37,14 @@ const CartItem = ({ product }) => {
 				</p>
 			</div>
 			<div className="col-sm-4 p-2 text-right">
-				<button onClick={() => increase(product)} className="btn btn-primary btn-sm mr-2 mb-1">
+				<div onClick={add} className="btn btn-primary btn-sm mr-2 mb-1">
 					<PlusIcon width={iconSize} />
-				</button>
+				</div>
 
 				{product.quantity > 1 && (
-					<button onClick={() => decrease(product)} className="btn btn-danger btn-sm mb-1">
+					<div onClick={subtract} className="btn btn-danger btn-sm mb-1">
 						<MinusIcon width={iconSize} />
-					</button>
+					</div>
 				)}
 
 				{product.quantity === 1 && (

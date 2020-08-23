@@ -40,18 +40,18 @@ export const CartReducer = (state, action) => {
 				cartItems: [...state.cartItems.filter(item => item.id !== action.payload.id)],
 			};
 		case 'INCREASE':
-			state.cartItems[state.cartItems.findIndex(item => item.id === action.payload.id)].quantity++;
 			return {
-				...state,
+				cartItems: state.cartItems.map((item, i) =>
+					i === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
+				),
 				...sumItems(state.cartItems),
-				cartItems: [...state.cartItems],
 			};
 		case 'DECREASE':
-			state.cartItems[state.cartItems.findIndex(item => item.id === action.payload.id)].quantity--;
 			return {
-				...state,
+				cartItems: state.cartItems.map((item, i) =>
+					i === action.payload.id ? { ...item, quantity: item.quantity - 1 } : item
+				),
 				...sumItems(state.cartItems),
-				cartItems: [...state.cartItems],
 			};
 		case 'CHECKOUT':
 			return {
