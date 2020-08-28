@@ -14,16 +14,11 @@ export const sumItems = cartItems => {
 export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_ITEM':
-			if (!state.cartItems.find(item => item.id === action.payload.id)) {
-				state.cartItems.push({
-					...action.payload,
-					quantity: 1,
-				});
-			}
+			if (!state.cartItems.find(item => item.id === action.payload.id))
+				state.cartItems.push({ ...action.payload, quantity: 1 });
 			return {
 				...state,
 				...sumItems(state.cartItems),
-				cartItems: [...state.cartItems],
 			};
 		case 'VIEW_ITEM':
 			state.viewItem = { ...action.payload };
@@ -41,15 +36,15 @@ export const CartReducer = (state, action) => {
 			};
 		case 'INCREASE':
 			return {
-				cartItems: state.cartItems.map((item, i) =>
-					i === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
+				cartItems: state.cartItems.map(item =>
+					item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
 				),
 				...sumItems(state.cartItems),
 			};
 		case 'DECREASE':
 			return {
-				cartItems: state.cartItems.map((item, i) =>
-					i === action.payload.id ? { ...item, quantity: item.quantity - 1 } : item
+				cartItems: state.cartItems.map(item =>
+					item.id === action.payload.id ? { ...item, quantity: item.quantity - 1 } : item
 				),
 				...sumItems(state.cartItems),
 			};
