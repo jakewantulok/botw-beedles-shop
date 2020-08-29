@@ -7,6 +7,7 @@ const ProductItem = ({ product }) => (
 		<p>{product.name}</p>
 		<p>{FormatCurrency(product.price)}</p>
 		<div>
+			
 			<ATC item={product} />
 		</div>
 	</>

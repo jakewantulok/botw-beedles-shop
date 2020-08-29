@@ -4,9 +4,11 @@ import { CartReducer, sumItems } from './CartReducer';
 export const CartContext = createContext();
 
 const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+
 const productStorage = localStorage.getItem('product')
 	? JSON.parse(localStorage.getItem('product'))
 	: [];
+
 const initialState = {
 	cartItems: storage,
 	viewItem: productStorage,
@@ -15,6 +17,7 @@ const initialState = {
 };
 
 const CartContextProvider = ({ children }) => {
+
 	const [state, dispatch] = useReducer(CartReducer, initialState);
 
 	const increase = payload => dispatch({ type: 'INCREASE', payload });
@@ -49,6 +52,7 @@ const CartContextProvider = ({ children }) => {
 	};
 
 	return <CartContext.Provider value={contextValues}>{children}</CartContext.Provider>;
+	
 };
 
 export default CartContextProvider;
