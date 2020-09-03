@@ -37,7 +37,7 @@ export const CartReducer = (state, action) => {
 		case 'INCREASE':
 			return {
 				cartItems: state.cartItems.map(item =>
-					item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item
+					item.id === action.payload.id ? { ...item, quantity: +item.quantity + 1 } : item
 				),
 				...sumItems(state.cartItems),
 			};
@@ -45,6 +45,14 @@ export const CartReducer = (state, action) => {
 			return {
 				cartItems: state.cartItems.map(item =>
 					item.id === action.payload.id ? { ...item, quantity: item.quantity - 1 } : item
+				),
+				...sumItems(state.cartItems),
+			};
+		case 'SET_QUANTITY':
+			console.log(action.qty);
+			return {
+				cartItems: state.cartItems.map(item =>
+					item.id === action.payload.id ? { ...item, quantity: action.qty } : item
 				),
 				...sumItems(state.cartItems),
 			};

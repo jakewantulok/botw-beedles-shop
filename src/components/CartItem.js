@@ -4,7 +4,7 @@ import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
 import FormatCurrency from './FormatCurrency';
 
 const CartItem = ({ product }) => {
-	const { increase, decrease, removeProduct } = useContext(CartContext);
+	const { increase, decrease, removeProduct, setQuantity } = useContext(CartContext);
 	const iconSize = '20';
 
 	const smIconStyle = {
@@ -28,8 +28,21 @@ const CartItem = ({ product }) => {
 			</div>
 			<div className="col-sm-2 p-2 text-center ">
 				<p className="mb-0">
+					Qty:{' '}
+					<input
+						type="text"
+						placeholder={product.quantity}
+						value={setTimeout(product.quantity ? product.quantity : removeProduct(product), 10000)}
+						onKeyUp={e =>
+							setTimeout(
+								product.quantity !== +e.target.value
+									? setQuantity(product, e.target.value)
+									: console.log(product.quantity),
+								10000
+							)
+						}
+					/>
 					<button onClick={() => removeProduct(product)} style={{ paddingTop: 0 }} className="btn">
-						Qty: {product.quantity}
 						<span className="text-danger" style={smIconStyle}>
 							<TrashIcon width={15} />
 						</span>

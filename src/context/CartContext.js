@@ -17,7 +17,6 @@ const initialState = {
 };
 
 const CartContextProvider = ({ children }) => {
-
 	const [state, dispatch] = useReducer(CartReducer, initialState);
 
 	const increase = payload => dispatch({ type: 'INCREASE', payload });
@@ -30,6 +29,8 @@ const CartContextProvider = ({ children }) => {
 
 	const removeProduct = payload => dispatch({ type: 'REMOVE_ITEM', payload });
 
+	const setQuantity = (payload, qty) => dispatch({ type: 'SET_QUANTITY', qty: qty, payload });
+
 	const clearCart = () => dispatch({ type: 'CLEAR' });
 
 	const resetCheckout = () => dispatch({ type: 'RESET' });
@@ -40,6 +41,7 @@ const CartContextProvider = ({ children }) => {
 	};
 
 	const contextValues = {
+		setQuantity,
 		removeProduct,
 		addProduct,
 		viewProduct,
@@ -52,7 +54,6 @@ const CartContextProvider = ({ children }) => {
 	};
 
 	return <CartContext.Provider value={contextValues}>{children}</CartContext.Provider>;
-	
 };
 
 export default CartContextProvider;
