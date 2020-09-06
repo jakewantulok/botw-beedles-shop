@@ -1,57 +1,57 @@
 export const productData = [
 	{
 		id: 0,
-		name: 'Product 2',
+		name: 'Product 1',
 		price: 39.99,
 		photo: '1.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 0,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 18,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 23,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 45,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 11,
 			},
 		],
 	},
 	{
 		id: 1,
-		name: 'Product',
+		name: 'Product 2',
 		price: 57.99,
 		photo: '2.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 3,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 18,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 10,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 6,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 31,
 			},
 		],
 	},
@@ -60,26 +60,26 @@ export const productData = [
 		name: 'Product 3',
 		price: 49.99,
 		photo: '3.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 5,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 14,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 20,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 25,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 20,
 			},
 		],
 	},
@@ -88,26 +88,26 @@ export const productData = [
 		name: 'Product 4',
 		price: 89.99,
 		photo: '4.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 7,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 12,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 13,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 25,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 2,
 			},
 		],
 	},
@@ -116,26 +116,26 @@ export const productData = [
 		name: 'Product 5',
 		price: 75.95,
 		photo: '5.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 1,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 0,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 4,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 5,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 10,
 			},
 		],
 	},
@@ -144,26 +144,26 @@ export const productData = [
 		name: 'Product 6',
 		price: 39.49,
 		photo: '6.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 3,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 2,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 0,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 15,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 37,
 			},
 		],
 	},
@@ -172,26 +172,26 @@ export const productData = [
 		name: 'Product 7',
 		price: 69.7,
 		photo: '7.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 1,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 9,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 8,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 7,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 0,
 			},
 		],
 	},
@@ -200,26 +200,26 @@ export const productData = [
 		name: 'Product 8',
 		price: 34.5,
 		photo: '8.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 15,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 1,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 27,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 0,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 12,
 			},
 		],
 	},
@@ -228,26 +228,26 @@ export const productData = [
 		name: 'Product 9',
 		price: 29.32,
 		photo: '9.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 5,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 12,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 20,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 25,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 20,
 			},
 		],
 	},
@@ -256,26 +256,26 @@ export const productData = [
 		name: 'Product 10',
 		price: 13.52,
 		photo: '10.jpg',
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: 5,
+				size: 'XS',
+				quantity: 5,
 			},
 			{
-				size: 'small',
-				inventory: 12,
+				size: 'S',
+				quantity: 11,
 			},
 			{
-				size: 'medium',
-				inventory: 20,
+				size: 'M',
+				quantity: 2,
 			},
 			{
-				size: 'large',
-				inventory: 25,
+				size: 'L',
+				quantity: 24,
 			},
 			{
-				size: 'x-large',
-				inventory: 20,
+				size: 'XL',
+				quantity: 10,
 			},
 		],
 	},
@@ -284,26 +284,26 @@ export const productData = [
 		name: 'Empty Product Test',
 		price: null,
 		photo: null,
-		sizes: [
+		inventory: [
 			{
-				size: 'x-small',
-				inventory: null,
+				size: 'XS',
+				quantity: null,
 			},
 			{
-				size: 'small',
-				inventory: null,
+				size: 'S',
+				quantity: null,
 			},
 			{
-				size: 'medium',
-				inventory: null,
+				size: 'M',
+				quantity: null,
 			},
 			{
-				size: 'large',
-				inventory: null,
+				size: 'L',
+				quantity: null,
 			},
 			{
-				size: 'x-large',
-				inventory: null,
+				size: 'XL',
+				quantity: null,
 			},
 		],
 	},
