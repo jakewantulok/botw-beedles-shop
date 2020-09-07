@@ -9,7 +9,10 @@ export const Cart = () => {
 
 	const cartEmptyMsg = (
 		<div id="cartEmptyMsg" className="p-3 text-center text-muted">
-			Your cart is empty
+			<p>Your cart is empty</p>
+			<Link to="/" className="btn btn-primary" onClick={clearCart}>
+				BACK TO HOME
+			</Link>
 		</div>
 	);
 	const buyMoreBtn = (
@@ -25,7 +28,6 @@ export const Cart = () => {
 		<Layout title="Cart" description="This is the Cart page">
 			<div className="text-center mt-5">
 				<h1>Cart</h1>
-				<p>This is the Cart Page.</p>
 			</div>
 
 			<div className="row no-gutters justify-content-center">
