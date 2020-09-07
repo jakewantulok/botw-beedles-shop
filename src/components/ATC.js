@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { InCart } from './InCart';
 
 const ATC = props => {
 	const { item } = props;
 	const { resetCheckout, checkout, addProduct, cartItems, increase } = useContext(CartContext);
-	const inCart = item => !!cartItems.find(obj => obj.id === item.id);
+	// const inCart = item => !!cartItems.find(obj => obj.id === item.id);
 
-	const resetChecker = () => {
+	const resetChecker = () => { debugger;
 		addProduct(item);
 		if (checkout) 
 			resetCheckout();
 	};
 
 	const addMore = () => {
-		let cart = cartItems.find(obj => obj.id === item.id).cart;
-
+		let cart = InCart(item, cartItems, 'cart');
 		cart === 0 && addProduct(item);
 		cart !== item.quantity && increase(item);
 	};
@@ -26,14 +26,14 @@ const ATC = props => {
 	);
 	const addMoreBtn = (
 		<button 
-			disabled={inCart(item) && cartItems.find(obj => obj.id === item.id).cart === item.quantity} 
+			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity} 
 			onClick={() => addMore()} 
 			className="btn btn-success add-more-btn">
 			Add more
 		</button>
 	);
 
-	return inCart(item) ? addMoreBtn : atcBtn;
+	return (InCart(item, cartItems) ? addMoreBtn : atcBtn);
 };
 
 export default ATC;
