@@ -5,7 +5,7 @@ import QtyMsg from './QtyMsg';
 import ClearItem from './ClearItem';
 
 class ProductItem extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			id: props.product.id,
@@ -13,57 +13,59 @@ class ProductItem extends Component {
 			price: props.product.price,
 			photo: props.product.photo,
 			size: undefined,
-			cart: 0
-		}
+			cart: 0,
+		};
 	}
 
-	render () {
+	render() {
 		const { product } = this.props;
 
 		const selectSize = item => {
 			this.setState(prevState => ({
 				...prevState,
-				id: item.variantId, 
+				id: item.variantId,
 				sale: item.sale,
 				size: item.size,
 				quantity: item.quantity,
-				cart: prevState.cart
+				cart: prevState.cart,
 			}));
 		};
 
 		const sizeBtns = product.inventory.map(item => (
-			<button 
+			<button
 				key={item.size}
 				className={this.state.size === item.size ? 'btn btn-dark' : 'btn btn-outline-dark'}
-				onClick={() => selectSize(item)}>{item.size}</button>
+				onClick={() => selectSize(item)}>
+				{item.size}
+			</button>
 		));
 
 		const changeBtn = () => {
-				if (typeof this.state.quantity === 'number') {
-					return (<ATC item={this.state} />);
-				} else {
-					return (<button disabled={true} className="btn btn-outline-dark">SELECT A SIZE</button>)
-				}
+			if (typeof this.state.quantity === 'number') {
+				return <ATC item={this.state} />;
+			} else {
+				return (
+					<button disabled={true} className="btn btn-outline-dark">
+						SELECT A SIZE
+					</button>
+				);
+			}
 		};
 
 		return (
-			<div key={product.id}>
+			<div key={product.id} hidden={typeof product.price == 'object' || typeof product.price == 'undefined'}>
 				<p>{product.name}</p>
 				<p>
-					<span 
-						className='text-success'
-						hidden={this.state.sale === product.price}>
+					<span className="text-success" hidden={this.state.sale === product.price}>
 						{typeof this.state.sale === 'number' && FormatCurrency(this.state.sale)}
 					</span>
-					<span 
-						style={ { textDecoration: this.state.sale < product.price && 'line-through' } }
+					<span
+						style={{ textDecoration: this.state.sale < product.price && 'line-through' }}
 						className={this.state.sale < product.price ? 'text-muted' : ''}>
 						{FormatCurrency(product.price)}
 					</span>
 				</p>
-				<div>
-					{sizeBtns}
-				</div>
+				<div>{sizeBtns}</div>
 				<div>
 					{changeBtn()}
 					<QtyMsg item={this.state} />
