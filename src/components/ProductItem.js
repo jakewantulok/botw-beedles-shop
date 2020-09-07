@@ -40,13 +40,9 @@ class ProductItem extends Component {
 
 		const changeBtn = () => {
 				if (typeof this.state.quantity === 'number') {
-					if (this.state.quantity > 0) {
-						return (<ATC item={this.state} />);
-					} else {
-						return (<button disabled={true} className='btn btn-outline-danger'>SOLD OUT</button>);
-					}
+					return (<ATC item={this.state} />);
 				} else {
-					return (<button disabled={true} className="btn btn-outline-dark">Select A Size</button>)
+					return (<button disabled={true} className="btn btn-outline-dark">SELECT A SIZE</button>)
 				}
 		};
 

@@ -23,6 +23,7 @@ const ATC = props => {
 			ADD TO CART
 		</button>
 	);
+
 	const addMoreBtn = (
 		<button 
 			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity} 
@@ -31,8 +32,11 @@ const ATC = props => {
 			ADD MORE
 		</button>
 	);
+	const soldOutBtn = (
+		<button disabled={true} className='btn btn-outline-danger'>SOLD OUT</button>
+	);
 
-	return (InCart(item, cartItems) ? addMoreBtn : atcBtn);
+	return (InCart(item, cartItems) ? <>{InCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</> : atcBtn);
 };
 
 export default ATC;
