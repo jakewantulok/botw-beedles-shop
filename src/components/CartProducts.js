@@ -4,7 +4,7 @@ import CartItem from './CartItem';
 import FormatCurrency from '../components/FormatCurrency';
 
 const CartProducts = () => {
-	const { cartItems, total, itemCount, handleCheckout, clearCart } = useContext(CartContext);
+	const { cartItems, total, savings, itemCount, handleCheckout, clearCart } = useContext(CartContext);
 	return (
 		<>
 			<div className="card card-body border-0">
@@ -20,6 +20,7 @@ const CartProducts = () => {
 				{FormatCurrency(total)}
 			</h3>
 			<hr className="my-4" />
+			<p hidden={savings <= 0} className='text-success'>You saved {FormatCurrency(savings)}!</p>
 			<div className="text-center">
 				<button type="button" className="btn btn-primary mb-2" onClick={handleCheckout}>
 					CHECKOUT

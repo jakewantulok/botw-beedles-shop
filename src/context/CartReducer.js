@@ -3,10 +3,11 @@ const productStorage = viewItem => localStorage.setItem('product', JSON.stringif
 export const sumItems = cartItems => {
 	let itemCount = cartItems.reduce((acc, { cart } ) => acc + cart, 0);
 	let total = cartItems.reduce((acc, { sale, cart }) => acc + sale * cart, 0).toFixed(2);
-	
+	let fullTotal = cartItems.reduce((acc, { price, cart }) => acc + price * cart, 0).toFixed(2);
+	let savings = fullTotal - total;
 	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
 
-	return { itemCount, total };
+	return { itemCount, total, savings };
 };
 
 export const CartReducer = (state, action) => {
