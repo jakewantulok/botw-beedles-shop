@@ -8,7 +8,15 @@ const ATC = props => {
 
 	const resetChecker = () => {
 		addProduct(item);
-		if (checkout) resetCheckout();
+		if (checkout) 
+			resetCheckout();
+	};
+
+	const addMore = () => {
+		let cart = cartItems.find(obj => obj.id === item.id).cart;
+
+		cart === 0 && addProduct(item);
+		cart !== item.quantity && increase(item);
 	};
 
 	const atcBtn = (
@@ -17,7 +25,10 @@ const ATC = props => {
 		</button>
 	);
 	const addMoreBtn = (
-		<button onClick={() => increase(item)} className="btn btn-success add-more-btn">
+		<button 
+			disabled={inCart(item) && cartItems.find(obj => obj.id === item.id).cart === item.quantity} 
+			onClick={() => addMore()} 
+			className="btn btn-success add-more-btn">
 			Add more
 		</button>
 	);
