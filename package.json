@@ -45,7 +45,7 @@
       "prettier/prettier": [
         "error",
         {
-          "printWidth": 100,
+          "printWidth": 120,
           "trailingComma": "es5",
           "useTabs": true,
           "tabWidth": 2,
