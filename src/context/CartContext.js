@@ -3,7 +3,9 @@ import { CartReducer, sumItems } from './CartReducer';
 
 export const CartContext = createContext();
 
-const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+const storage = localStorage.getItem('cart') 
+	? JSON.parse(localStorage.getItem('cart')) 
+	: [];
 
 const productStorage = localStorage.getItem('product')
 	? JSON.parse(localStorage.getItem('product'))
@@ -29,19 +31,16 @@ const CartContextProvider = ({ children }) => {
 
 	const removeProduct = payload => dispatch({ type: 'REMOVE_ITEM', payload });
 
-	const setQuantity = (payload, qty) => dispatch({ type: 'SET_QUANTITY', qty: qty, payload });
+	// const setQuantity = (payload, qty) => dispatch({ type: 'SET_QUANTITY', qty: qty, payload });
 
 	const clearCart = () => dispatch({ type: 'CLEAR' });
 
 	const resetCheckout = () => dispatch({ type: 'RESET' });
 
-	const handleCheckout = () => {
-		console.log('CHECKOUT', state);
-		dispatch({ type: 'CHECKOUT' });
-	};
+	const handleCheckout = () => dispatch({ type: 'CHECKOUT' });
 
 	const contextValues = {
-		setQuantity,
+		// setQuantity,
 		removeProduct,
 		addProduct,
 		viewProduct,
