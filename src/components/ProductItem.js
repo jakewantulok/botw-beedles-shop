@@ -51,14 +51,14 @@ class ProductItem extends Component {
 				<p>{product.name}</p>
 				<p>
 					<span 
-						style={ { textDecoration: this.state.sale < product.price && 'line-through' } }
-						className={this.state.sale < product.price ? 'text-muted' : ''}>
-						{FormatCurrency(product.price)}
-					</span>
-					<span 
 						className='text-success'
 						hidden={this.state.sale === product.price}>
 						{typeof this.state.sale === 'number' && FormatCurrency(this.state.sale)}
+					</span>
+					<span 
+						style={ { textDecoration: this.state.sale < product.price && 'line-through' } }
+						className={this.state.sale < product.price ? 'text-muted' : ''}>
+						{FormatCurrency(product.price)}
 					</span>
 				</p>
 				<div>

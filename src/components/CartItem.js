@@ -14,15 +14,15 @@ const CartItem = ({ product }) => {
 			<div className="col-sm-4 p-2">
 				<h5 className="mb-1">{product.name}</h5>
 				<p className="mb-1">
-				<span 
-						style={ { textDecoration: product.sale < product.price && 'line-through' } }
-						className={product.sale < product.price ? 'text-muted' : ''}>
-						{FormatCurrency(product.price)}
-					</span>
 					<span 
 						className='text-success'
 						hidden={product.sale === product.price}>
 						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
+					</span>
+					<span 
+						style={ { textDecoration: product.sale < product.price && 'line-through' } }
+						className={product.sale < product.price ? 'text-muted' : ''}>
+						{FormatCurrency(product.price)}
 					</span>
 				</p>
 			</div>
