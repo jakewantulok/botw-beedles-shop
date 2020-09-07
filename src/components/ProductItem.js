@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormatCurrency from './FormatCurrency';
 import ATC from './ATC';
 import QtyMsg from './QtyMsg';
+import ClearItem from './ClearItem';
 
 class ProductItem extends Component {
 	constructor (props) {
@@ -66,10 +67,13 @@ class ProductItem extends Component {
 				<div>
 					{sizeBtns}
 				</div>
-				<p>
+				<div>
 					{changeBtn()}
 					<QtyMsg item={this.state} />
-				</p>
+				</div>
+				<div>
+					<ClearItem item={this.state} />
+				</div>
 			</div>
 		);
 	}
