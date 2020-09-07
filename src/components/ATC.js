@@ -5,9 +5,8 @@ import { InCart } from './InCart';
 const ATC = props => {
 	const { item } = props;
 	const { resetCheckout, checkout, addProduct, cartItems, increase } = useContext(CartContext);
-	// const inCart = item => !!cartItems.find(obj => obj.id === item.id);
 
-	const resetChecker = () => { debugger;
+	const resetChecker = () => {
 		addProduct(item);
 		if (checkout) 
 			resetCheckout();
@@ -21,7 +20,7 @@ const ATC = props => {
 
 	const atcBtn = (
 		<button onClick={() => resetChecker()} className="btn btn-primary atc-btn">
-			Add to cart
+			ADD TO CART
 		</button>
 	);
 	const addMoreBtn = (
@@ -29,7 +28,7 @@ const ATC = props => {
 			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity} 
 			onClick={() => addMore()} 
 			className="btn btn-success add-more-btn">
-			Add more
+			ADD MORE
 		</button>
 	);
 
