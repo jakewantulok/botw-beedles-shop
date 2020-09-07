@@ -1,25 +1,24 @@
 const productStorage = viewItem => localStorage.setItem('product', JSON.stringify(viewItem));
 
 export const sumItems = cartItems => {
-	const itemCount = cartItems.reduce((acc, { cart } ) => acc + cart, 0);
+	const itemCount = cartItems.reduce((acc, { cart }) => acc + cart, 0);
 
 	const fullTotal = cartItems.reduce((acc, { price, cart }) => acc + price * cart, 0).toFixed(2);
 	const total = cartItems.reduce((acc, { sale, cart }) => acc + sale * cart, 0).toFixed(2);
 	const savings = fullTotal - total;
+	const savingsPercent = ((savings / fullTotal) * 100).toFixed(0);
 
 	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
 
-	return { itemCount, total, savings };
+	return { itemCount, total, savings, savingsPercent };
 };
 
 export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_ITEM':
-			const addItem = (
-				!state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size) 
+			const addItem = !state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size)
 				? [...state.cartItems, { ...action.payload, cart: 1 }]
-				: [...state.cartItems]
-			);
+				: [...state.cartItems];
 			return {
 				...state,
 				cartItems: addItem,
@@ -37,14 +36,17 @@ export const CartReducer = (state, action) => {
 			return {
 				...state,
 				...sumItems(state.cartItems.filter(item => item.id !== action.payload.id && item.size !== action.payload.size)),
-				cartItems: [...state.cartItems.filter(item => item.id !== action.payload.id && item.size !== action.payload.size)],
+				cartItems: [
+					...state.cartItems.filter(item => item.id !== action.payload.id && item.size !== action.payload.size),
+				],
 			};
 		case 'INCREASE':
-			const oneMore = (
-				state.cartItems.map(item =>
-					(item.id === action.payload.id && item.size === action.payload.size) 
-					&& action.payload.cart < action.payload.quantity 
-					? { ...item, cart: item.cart + 1} : item)
+			const oneMore = state.cartItems.map(item =>
+				item.id === action.payload.id &&
+				item.size === action.payload.size &&
+				action.payload.cart < action.payload.quantity
+					? { ...item, cart: item.cart + 1 }
+					: item
 			);
 			return {
 				...state,
@@ -52,10 +54,10 @@ export const CartReducer = (state, action) => {
 				...sumItems(oneMore),
 			};
 		case 'DECREASE':
-			const oneLess = (state.cartItems.map(item =>
-				(item.id === action.payload.id && item.size === action.payload.size) 
-				&& action.payload.cart > 0 
-				? { ...item, cart: item.cart - 1} : item)
+			const oneLess = state.cartItems.map(item =>
+				item.id === action.payload.id && item.size === action.payload.size && action.payload.cart > 0
+					? { ...item, cart: item.cart - 1 }
+					: item
 			);
 			return {
 				...state,
