@@ -1,13 +1,18 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { InCart } from './InCart';
 
 const QtyMsg = props => {
   const { cartItems } = useContext(CartContext);
   const { item } = props;
-  const inCart = item => !!cartItems.find(obj => obj.id === item.id);
   return (
-    <span hidden={item.quantity > 0 && item.quantity <= 15 ? false : true} className='sizeQty text-danger'>
-			ONLY {inCart(item) ? item.quantity - (cartItems.find(obj => obj.id === item.id).cart) : item.quantity} LEFT!
+    <span 
+      hidden={item.quantity > 0 
+        && InCart(item, cartItems) 
+        && (item.quantity - InCart(item, cartItems, 'cart') <= 15 && item.quantity - InCart(item, cartItems, 'cart') > 0) 
+        ? false : true} 
+      className='sizeQty text-danger'>
+			ONLY {InCart(item, cartItems) ? item.quantity - InCart(item, cartItems, 'cart') : item.quantity} LEFT!
     </span>
   );
 
