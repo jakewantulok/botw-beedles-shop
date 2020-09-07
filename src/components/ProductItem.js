@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormatCurrency from './FormatCurrency';
 import ATC from './ATC';
+import QtyMsg from './QtyMsg';
 
 class ProductItem extends Component {
 	constructor (props) {
@@ -26,7 +27,6 @@ class ProductItem extends Component {
 				quantity: item.quantity,
 				cart: prevState.cart
 			}));
-			console.log(this.state);
 		};
 
 		const sizeBtns = product.inventory.map(item => (
@@ -54,7 +54,7 @@ class ProductItem extends Component {
 				<p>
 					<span 
 						style={ { textDecoration: this.state.sale < product.price && 'line-through' } }
-						className={this.state.sale < product.price && 'text-muted'}>
+						className={this.state.sale < product.price ? 'text-muted' : ''}>
 						{FormatCurrency(product.price)}
 					</span>
 					<span 
@@ -68,7 +68,7 @@ class ProductItem extends Component {
 				</div>
 				<p>
 					{changeBtn()}
-					<span hidden={this.state.quantity > 0 && this.state.quantity <= 15 ? false : true} className='sizeQty text-danger'>ONLY {this.state.quantity} LEFT!</span>
+					<QtyMsg item={this.state} />
 				</p>
 			</div>
 		);
