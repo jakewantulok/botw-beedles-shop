@@ -23,6 +23,7 @@ class ProductItem extends Component {
 		const selectSize = item => {
 			this.setState(prevState => ({
 				...prevState,
+				id: item.variantId, 
 				sale: item.sale,
 				size: item.size,
 				quantity: item.quantity,
