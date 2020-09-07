@@ -5,17 +5,28 @@ import ATC from './ATC';
 class ProductItem extends Component {
 	constructor (props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			id: props.product.id,
+			name: props.product.name,
+			price: props.product.price,
+			photo: props.product.photo,
+			size: undefined,
+			cart: 0
+		}
 	}
 
 	render () {
 		const { product } = this.props;
 
 		const selectSize = item => {
-			this.setState({
+			this.setState(prevState => ({
+				...prevState,
+				sale: item.sale,
 				size: item.size,
-				quantity: item.quantity
-			});
+				quantity: item.quantity,
+				cart: prevState.cart
+			}));
+			console.log(this.state);
 		};
 
 		const sizeBtns = product.inventory.map(item => (
@@ -25,16 +36,39 @@ class ProductItem extends Component {
 				onClick={() => selectSize(item)}>{item.size}</button>
 		));
 
+		const changeBtn = () => {
+				if (typeof this.state.quantity === 'number') {
+					if (this.state.quantity > 0) {
+						return (<ATC item={this.state} />);
+					} else {
+						return (<button disabled={true} className='btn btn-outline-danger'>SOLD OUT</button>);
+					}
+				} else {
+					return (<button disabled={true} className="btn btn-outline-dark">Select A Size</button>)
+				}
+		};
+
 		return (
 			<div key={product.id}>
 				<p>{product.name}</p>
-				<p>{FormatCurrency(product.price)}</p>
+				<p>
+					<span 
+						style={ { textDecoration: this.state.sale < product.price && 'line-through' } }
+						className={this.state.sale < product.price && 'text-muted'}>
+						{FormatCurrency(product.price)}
+					</span>
+					<span 
+						className='text-success'
+						hidden={this.state.sale === product.price}>
+						{typeof this.state.sale === 'number' && FormatCurrency(this.state.sale)}
+					</span>
+				</p>
 				<div>
 					{sizeBtns}
 				</div>
 				<p>
-					{/[1-9]/.test(this.state.quantity) && <ATC item={this.state} />}
-					<span hidden={typeof this.state.quantity === 'number' ? false : true} className={this.state.quantity === 0 ? 'qtyMsg text-danger' : 'qtyMsg'}>{this.state.quantity === 0 ? 'SOLD OUT' : `QTY: ${this.state.quantity}`}</span>
+					{changeBtn()}
+					<span hidden={this.state.quantity > 0 && this.state.quantity <= 15 ? false : true} className='sizeQty text-danger'>ONLY {this.state.quantity} LEFT!</span>
 				</p>
 			</div>
 		);

@@ -12,12 +12,12 @@ const ATC = props => {
 	};
 
 	const atcBtn = (
-		<button onClick={() => resetChecker()} className="btn btn-outline-primary btn-sm atc-btn">
+		<button onClick={() => resetChecker()} className="btn btn-outline-primary atc-btn">
 			Add to cart
 		</button>
 	);
 	const addMoreBtn = (
-		<button onClick={() => increase(item)} className="btn btn-outline-success btn-sm add-more-btn">
+		<button onClick={() => increase(item)} className="btn btn-outline-success add-more-btn">
 			Add more
 		</button>
 	);
