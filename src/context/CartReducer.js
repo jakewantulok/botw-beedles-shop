@@ -1,24 +1,26 @@
-const Storage = cartItems =>
-	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
 const productStorage = viewItem => localStorage.setItem('product', JSON.stringify(viewItem));
 
 export const sumItems = cartItems => {
-	Storage(cartItems);
-	let itemCount = cartItems.reduce((total, product) => total + product.quantity, 0);
-	let total = cartItems
-		.reduce((total, product) => total + product.price * product.quantity, 0)
-		.toFixed(2);
+	let itemCount = cartItems.reduce((acc, { cart } ) => acc + cart, 0);
+	let total = cartItems.reduce((acc, { sale, cart }) => acc + sale * cart, 0).toFixed(2);
+	
+	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
+
 	return { itemCount, total };
 };
 
 export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_ITEM':
-			if (!state.cartItems.find(item => item.id === action.payload.id))
-				state.cartItems.push({ ...action.payload, quantity: 1 });
+			const addItem = (
+				!state.cartItems.find(item => item.id === action.payload.id) 
+				? [...state.cartItems, { ...action.payload, cart: 1 }]
+				: [...state.cartItems]
+			);
 			return {
 				...state,
-				...sumItems(state.cartItems),
+				cartItems: addItem,
+				...sumItems(addItem),
 			};
 		case 'VIEW_ITEM':
 			state.viewItem = { ...action.payload };
@@ -35,27 +37,32 @@ export const CartReducer = (state, action) => {
 				cartItems: [...state.cartItems.filter(item => item.id !== action.payload.id)],
 			};
 		case 'INCREASE':
+			const oneMore = (
+				state.cartItems.map(item =>
+					item.id === action.payload.id && action.payload.cart < action.payload.quantity ? { ...item, cart: item.cart + 1} : item)
+			);
 			return {
-				cartItems: state.cartItems.map(item =>
-					item.id === action.payload.id ? { ...item, quantity: +item.quantity + 1 } : item
-				),
-				...sumItems(state.cartItems),
+				...state,
+				cartItems: oneMore,
+				...sumItems(oneMore),
 			};
 		case 'DECREASE':
+			const oneLess = (state.cartItems.map(item =>
+				item.id === action.payload.id && action.payload.cart > 0 ? { ...item, cart: item.cart - 1} : item)
+			);
 			return {
-				cartItems: state.cartItems.map(item =>
-					item.id === action.payload.id ? { ...item, quantity: item.quantity - 1 } : item
-				),
-				...sumItems(state.cartItems),
+				...state,
+				cartItems: oneLess,
+				...sumItems(oneLess),
 			};
-		case 'SET_QUANTITY':
-			console.log(action.qty);
-			return {
-				cartItems: state.cartItems.map(item =>
-					item.id === action.payload.id ? { ...item, quantity: action.qty } : item
-				),
-				...sumItems(state.cartItems),
-			};
+		// case 'SET_QUANTITY':
+		// 	console.log(action.qty);
+		// 	return {
+		// 		cartItems: state.cartItems.map(item =>
+		// 			item.id === action.payload.id ? { ...item, cart: action.qty } : item
+		// 		),
+		// 		...sumItems(state.cartItems),
+		// 	};
 		case 'CHECKOUT':
 			return {
 				cartItems: [],

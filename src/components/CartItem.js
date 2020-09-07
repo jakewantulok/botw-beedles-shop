@@ -4,7 +4,8 @@ import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
 import FormatCurrency from './FormatCurrency';
 
 const CartItem = ({ product }) => {
-	const { increase, decrease, removeProduct, setQuantity } = useContext(CartContext);
+	const { increase, decrease, removeProduct } = useContext(CartContext);
+
 	const iconSize = '20';
 
 	const smIconStyle = {
@@ -14,34 +15,31 @@ const CartItem = ({ product }) => {
 		paddingLeft: 10,
 	};
 
-	const add = () => increase(product);
-	const subtract = () => decrease(product);
-
 	return (
 		<div className="row no-gutters py-2">
 			<div className="col-sm-2 p-2">
-				{/* <SetImg info={product} style={imgStyle} addClass='img-fluid d-block'/> */}
 			</div>
 			<div className="col-sm-4 p-2">
 				<h5 className="mb-1">{product.name}</h5>
-				<p className="mb-1">Price: {FormatCurrency(product.price)} </p>
+				<p className="mb-1">
+				<span 
+						style={ { textDecoration: product.sale < product.price && 'line-through' } }
+						className={product.sale < product.price ? 'text-muted' : ''}>
+						{FormatCurrency(product.price)}
+					</span>
+					<span 
+						className='text-success'
+						hidden={product.sale === product.price}>
+						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
+					</span>
+				</p>
 			</div>
-			<div className="col-sm-2 p-2 text-center ">
+			<div className="col-sm-2 p-2">
 				<p className="mb-0">
-					Qty:{' '}
-					<input
-						type="text"
-						placeholder={product.quantity}
-						value={setTimeout(product.quantity ? product.quantity : removeProduct(product), 10000)}
-						onKeyUp={e =>
-							setTimeout(
-								product.quantity !== +e.target.value
-									? setQuantity(product, e.target.value)
-									: console.log(product.quantity),
-								10000
-							)
-						}
-					/>
+					<span>Size: {product.size}</span>
+				</p>
+				<p className="mb-0">
+					Qty:{product.cart}
 					<button onClick={() => removeProduct(product)} style={{ paddingTop: 0 }} className="btn">
 						<span className="text-danger" style={smIconStyle}>
 							<TrashIcon width={15} />
@@ -49,22 +47,26 @@ const CartItem = ({ product }) => {
 					</button>
 				</p>
 			</div>
-			<div className="col-sm-4 p-2 text-right">
-				<div onClick={add} className="btn btn-primary btn-sm mr-2 mb-1">
+			<div className="col-sm-4 p-2">
+				<button 
+					onClick={() => increase(product)} 
+					className={product.cart !== product.quantity ? 'btn btn-primary btn-sm mr-2 mb-1' : 'btn btn-light btn-sm mr-2 mb-1'}
+					disabled={product.cart === product.quantity}>
 					<PlusIcon width={iconSize} />
-				</div>
+				</button>
 
-				{product.quantity > 1 && (
-					<div onClick={subtract} className="btn btn-danger btn-sm mb-1">
+				{product.cart > 1 && (
+					<button onClick={() => decrease(product)} className="btn btn-danger btn-sm mb-1">
 						<MinusIcon width={iconSize} />
-					</div>
+					</button>
 				)}
 
-				{product.quantity === 1 && (
+				{product.cart === 1 && (
 					<button onClick={() => removeProduct(product)} className="btn btn-danger btn-sm mb-1">
 						<TrashIcon width={iconSize} />
 					</button>
 				)}
+
 			</div>
 		</div>
 	);
