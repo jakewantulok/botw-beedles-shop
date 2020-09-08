@@ -16,13 +16,37 @@ export const sumItems = cartItems => {
 export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_ITEM':
-			const addItem = !state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size)
-				? [...state.cartItems, { ...action.payload, cart: 1 }]
-				: [...state.cartItems];
+			let cartItems = [...state.cartItems];
+			let ids = [];
+			let index;
+
+			if (cartItems.length > 0) {
+				for (let i in state.cartItems) {
+					ids.push(state.cartItems[i].id);
+				}
+
+				for (let i in ids) {
+					if (action.payload.id < ids[i]) {
+						index = i;
+						break;
+					} else if (action.payload.id === ids[i]) {
+						break;
+					} else if (action.payload.id > ids[i]) {
+						index = i + 1;
+					}
+				}
+
+				index && cartItems.splice(index, 0, { ...action.payload, cart: 1 });
+			} else {
+				cartItems = [...state.cartItems, { ...action.payload, cart: 1 }];
+			}
+			// const addItem = !state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size)
+			// 	? [...state.cartItems, { ...action.payload, cart: 1 }]
+			// 	: [...state.cartItems];
 			return {
 				...state,
-				cartItems: addItem,
-				...sumItems(addItem),
+				cartItems: [...cartItems],
+				...sumItems([...cartItems]),
 			};
 		case 'VIEW_ITEM':
 			state.viewItem = { ...action.payload };
