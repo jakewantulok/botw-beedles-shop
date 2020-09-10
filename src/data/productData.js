@@ -268,7 +268,7 @@ export const productData = [
 	{
 		id: 8,
 		name: 'Product 8',
-		price: 34.5,
+		price: 44.5,
 		photo: '8.jpg',
 		inventory: [
 			{
