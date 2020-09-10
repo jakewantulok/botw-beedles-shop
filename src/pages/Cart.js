@@ -15,6 +15,7 @@ export const Cart = () => {
 			</Link>
 		</div>
 	);
+
 	const buyMoreBtn = (
 		<div id="buyMoreBtn" className="p-3 text-center text-success">
 			<p>Checkout successful</p>
@@ -31,9 +32,7 @@ export const Cart = () => {
 			</div>
 
 			<div className="row no-gutters justify-content-center">
-				{cartItems.length > 0 
-				? <CartProducts /> 
-				: <>{checkout ? buyMoreBtn : cartEmptyMsg}</>}
+				{cartItems.length > 0 ? <CartProducts /> : <>{checkout ? buyMoreBtn : cartEmptyMsg}</>}
 			</div>
 		</Layout>
 	);
