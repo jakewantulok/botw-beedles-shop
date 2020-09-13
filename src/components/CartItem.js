@@ -9,9 +9,11 @@ const CartItem = ({ product }) => {
 
 	return (
 		<div className="row no-gutters py-2">
-			<div className="col-sm-2 p-2"></div>
+			<div className="col-sm-2 p-2">
+				<img src={'./img/products/' + product.photo} alt={product.name} width={75} />
+			</div>
 			<div className="col-sm-4 p-2">
-				<h5 className="mb-1">{product.name}</h5>
+				<h4 className="mb-1">{product.name}</h4>
 				<p className="mb-1">
 					<span className="text-success" hidden={product.sale === product.price}>
 						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
@@ -24,15 +26,12 @@ const CartItem = ({ product }) => {
 				</p>
 			</div>
 			<div className="col-sm-2 p-2">
-				<p className="mb-0">
-					<span>Size: {product.size}</span>
-				</p>
-				<p className="mb-0">
-					Qty:{product.cart}
+				<h5 className="mb-0">
+					Stock: {product.cart}
 					<ClearItem item={product}>
 						<TrashIcon width={15} />
 					</ClearItem>
-				</p>
+				</h5>
 			</div>
 			<div className="col-sm-4 p-2">
 				<button
