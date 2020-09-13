@@ -17,28 +17,31 @@ export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'ADD_ITEM':
 			let cartItems = [...state.cartItems];
-			let ids = [];
-			let index;
+			let categories = [];
+			let names = [];
+			let index = 0;
 
 			if (cartItems.length > 0) {
 				for (let i in state.cartItems) {
-					ids.push(state.cartItems[i].id);
-				}
-
-				for (let i in ids) {
-					if (action.payload.id < ids[i]) {
-						index = i;
-						break;
-					} else if (action.payload.id === ids[i]) {
-						break;
-					} else if (action.payload.id > ids[i]) {
-						index = i + 1;
+					names.push(state.cartItems[i].name);
+					if (!categories.length > 0 || !categories.find(e => e === state.cartItems[i].category)) {
+						categories.push(state.cartItems[i].category);
 					}
 				}
 
-				index && cartItems.splice(index, 0, { ...action.payload, cart: 1 });
+				for (let i in names) {
+					if (action.payload.category === categories[i] && action.payload.name === names[i]) {
+						index = undefined; // disallow adding to cart
+						break; // exact match, already in cart
+					} else {
+						i++;
+						index = i; // same category, insert after
+					}
+				}
+
+				index && cartItems.splice(index, 0, { ...action.payload, id: index, cart: 1 });
 			} else {
-				cartItems = [...state.cartItems, { ...action.payload, cart: 1 }];
+				cartItems = [...state.cartItems, { ...action.payload, id: 0, cart: 1 }];
 			}
 			// const addItem = !state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size)
 			// 	? [...state.cartItems, { ...action.payload, cart: 1 }]
@@ -65,17 +68,15 @@ export const CartReducer = (state, action) => {
 				],
 			};
 		case 'INCREASE':
-			const oneMore = state.cartItems.map(item =>
-				item.id === action.payload.id &&
-				item.size === action.payload.size &&
-				action.payload.cart < action.payload.quantity
+			const addMore = state.cartItems.map(item =>
+				item.name === action.payload.name && action.payload.cart * action.payload.bulk < action.payload.quantity
 					? { ...item, cart: item.cart + 1 }
 					: item
 			);
 			return {
 				...state,
-				cartItems: oneMore,
-				...sumItems(oneMore),
+				cartItems: addMore,
+				...sumItems(addMore),
 			};
 		case 'DECREASE':
 			const oneLess = state.cartItems.map(item =>
