@@ -8,8 +8,7 @@ const ATC = props => {
 
 	const resetChecker = () => {
 		addProduct(item);
-		if (checkout) 
-			resetCheckout();
+		checkout && resetCheckout();
 	};
 
 	const addMore = () => {
@@ -25,18 +24,24 @@ const ATC = props => {
 	);
 
 	const addMoreBtn = (
-		<button 
-			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity} 
-			onClick={() => addMore()} 
+		<button
+			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity}
+			onClick={() => addMore()}
 			className="btn btn-success add-more-btn">
 			ADD MORE
 		</button>
 	);
 	const soldOutBtn = (
-		<button disabled={true} className='btn btn-outline-danger'>SOLD OUT</button>
+		<button disabled={true} className="btn btn-outline-danger">
+			SOLD OUT
+		</button>
 	);
 
-	return (InCart(item, cartItems) ? <>{InCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</> : atcBtn);
+	return InCart(item, cartItems) ? (
+		<>{InCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</>
+	) : (
+		atcBtn
+	);
 };
 
 export default ATC;
