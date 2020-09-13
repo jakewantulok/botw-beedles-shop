@@ -3,13 +3,9 @@ import { CartReducer, sumItems } from './CartReducer';
 
 export const CartContext = createContext();
 
-const storage = localStorage.getItem('cart') 
-	? JSON.parse(localStorage.getItem('cart')) 
-	: [];
+const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 
-const productStorage = localStorage.getItem('product')
-	? JSON.parse(localStorage.getItem('product'))
-	: [];
+const productStorage = localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : [];
 
 const initialState = {
 	cartItems: storage,
