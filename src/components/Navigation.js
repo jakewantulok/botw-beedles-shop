@@ -3,13 +3,15 @@ import { CartContext } from '../context/CartContext';
 import { Nav, Navbar } from 'react-bootstrap';
 import Layout from './Layout';
 import { CartIcon } from './Icons';
+import { storeConfig } from '../data/storeConfig';
 
 const Navigation = () => {
 	const { itemCount } = useContext(CartContext);
+	const { siteTitle } = storeConfig;
 	return (
 		<Navbar bg="light" expand="lg">
 			<Layout>
-				<Navbar.Brand href="/">React Storefront</Navbar.Brand>
+				<Navbar.Brand href="/">{siteTitle}</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
