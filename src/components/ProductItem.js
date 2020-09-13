@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import FormatCurrency from './FormatCurrency';
 import ATC from './ATC';
 import QtyMsg from './QtyMsg';
 import ClearItem from './ClearItem';
 
 class ProductItem extends Component {
 	constructor(props) {
-		super(props);
+		super();
 		this.state = {
-			id: props.product.id,
-			name: props.product.name,
-			price: props.product.price,
+			name: props.product.name + ' ' + props.product.sale[0].name,
+			category: props.product.category,
 			photo: props.product.photo,
-			size: undefined,
+			description: props.product.description,
+			price: props.product.sale[0].price,
+			quantity: props.product.quantity,
+			bulk: props.product.sale[0].bulk,
 			cart: 0,
 		};
 	}
@@ -20,54 +21,51 @@ class ProductItem extends Component {
 	render() {
 		const { product } = this.props;
 
-		const selectSize = item => {
+		const selectOption = option => {
 			this.setState(prevState => ({
 				...prevState,
-				id: item.variantId,
-				sale: item.sale,
-				size: item.size,
-				quantity: item.quantity,
+				name: product.name + ' ' + option.name,
+				category: product.category,
+				photo: product.photo,
+				description: product.description,
+				price: option.price,
+				bulk: option.bulk,
 				cart: prevState.cart,
 			}));
 		};
 
-		const sizeBtns = product.inventory.map(item => (
+		const optionBtns = product.sale.map((option, i) => (
 			<button
-				key={item.size}
-				className={this.state.size === item.size ? 'btn btn-dark' : 'btn btn-outline-dark'}
-				onClick={() => selectSize(item)}>
-				{item.size}
+				key={i}
+				className={this.state.name === product.name + ' ' + option.name ? 'btn btn-dark' : 'btn btn-outline-dark'}
+				onClick={() => selectOption(option)}>
+				{option.name}
 			</button>
 		));
 
-		const changeBtn = () => {
-			if (typeof this.state.quantity === 'number') {
-				return <ATC item={this.state} />;
-			} else {
-				return (
-					<button disabled={true} className="btn btn-outline-dark">
-						SELECT A SIZE
-					</button>
-				);
-			}
-		};
-
 		return (
-			<div key={product.id} hidden={typeof product.price == 'object' || typeof product.price == 'undefined'}>
-				<p>{product.name}</p>
+			<div key={product.id} hidden={!product.price}>
+				<h3>{this.state.name}</h3>
+				<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
 				<p>
-					<span className="text-success" hidden={this.state.sale === product.price}>
-						{typeof this.state.sale === 'number' && FormatCurrency(this.state.sale)}
-					</span>
+					<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
+					<span>{this.state.price}</span>
 					<span
-						style={{ textDecoration: this.state.sale < product.price && 'line-through' }}
-						className={this.state.sale < product.price ? 'text-muted' : ''}>
-						{FormatCurrency(product.price)}
+						hidden={100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) <= 0}
+						style={{ textDecoration: this.state.price / this.state.bulk < product.price && 'line-through' }}
+						className="text-success">
+						{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) + '% Off!'}
 					</span>
 				</p>
-				<div>{sizeBtns}</div>
+				<div>{optionBtns}</div>
 				<div>
-					{changeBtn()}
+					{this.state.name ? (
+						<ATC item={this.state} />
+					) : (
+						<button disabled={true} className="btn btn-outline-dark">
+							SELECT A SIZE
+						</button>
+					)}
 					<QtyMsg item={this.state} />
 				</div>
 				<div>
