@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import CartItem from './CartItem';
-import FormatCurrency from '../components/FormatCurrency';
 
 const CartProducts = () => {
 	const { cartItems, total, savings, savingsPercent, itemCount, handleCheckout, clearCart } = useContext(CartContext);
 	return (
 		<>
-			<div className="card card-body border-0">
+			<div>
 				{cartItems.map(product => (
 					<CartItem key={product.id} product={product} />
 				))}
@@ -16,10 +15,10 @@ const CartProducts = () => {
 				<p className="mb-1">Total Items</p>
 				<h4 className="mb-3 txt-right">{itemCount}</h4>
 				<p className="mb-1">Total Payment</p>
-				<h3 className="m-0 txt-right">{FormatCurrency(total)}</h3>
+				<h3 className="m-0 txt-right">{total}</h3>
 				<hr className="my-4" />
-				<p hidden={savings <= 0} className="text-success">
-					You saved {FormatCurrency(savings)} ({savingsPercent}%)
+				<p hidden={savings <= 0} className="text-success font-italic">
+					You saved {savings} ({savingsPercent}%)
 				</p>
 				<div className="text-center">
 					<button type="button" className="btn btn-primary mb-2" onClick={handleCheckout}>
