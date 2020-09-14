@@ -14,6 +14,60 @@ export const sumItems = cartItems => {
 };
 
 export const CartReducer = (state, action) => {
+	const handleInventory = (cartItems, payload, actionType = '') => {
+		if (!cartItems && !payload) return;
+
+		let updateCart;
+		let num;
+		// change the target's cart number and update the quantity
+		switch (actionType) {
+			case 'INCREASE':
+			case 'ADD_ITEM':
+				if (payload.cart * payload.bulk < payload.quantity) {
+					num = payload.quantity - payload.bulk;
+					updateCart = cartItems.map(item =>
+						item.name === payload.name
+							? {
+									...item,
+									cart: payload.cart + 1,
+									quantity: num,
+							  }
+							: item
+					);
+				} else {
+					updateCart = cartItems;
+				}
+				break;
+			case 'DECREASE':
+				num = payload.quantity + payload.bulk;
+				updateCart = cartItems.map(item =>
+					item.name === payload.name
+						? {
+								...item,
+								cart: payload.cart - 1,
+								quantity: num,
+						  }
+						: item
+				);
+				break;
+			default:
+				num = payload.quantity;
+				updateCart = cartItems;
+		}
+
+		// use the updated quantity of the target to update quanities of any matching products in cart
+		updateCart = updateCart.map(item =>
+			item.name.replace(/x[1-9]/) === payload.name.replace(/x[1-9]/)
+				? {
+						...item,
+						quantity: num,
+				  }
+				: item
+		);
+
+		return updateCart;
+	};
+
 	switch (action.type) {
 		case 'ADD_ITEM':
 			let cartItems = [...state.cartItems];
@@ -39,17 +93,17 @@ export const CartReducer = (state, action) => {
 					}
 				}
 
-				index && cartItems.splice(index, 0, { ...action.payload, id: index, cart: 1 });
+				index && cartItems.splice(index, 0, { ...action.payload, id: index });
 			} else {
-				cartItems = [...state.cartItems, { ...action.payload, id: 0, cart: 1 }];
+				cartItems = [...state.cartItems, { ...action.payload, id: 0 }];
 			}
-			// const addItem = !state.cartItems.find(item => item.id === action.payload.id && item.size === action.payload.size)
-			// 	? [...state.cartItems, { ...action.payload, cart: 1 }]
-			// 	: [...state.cartItems];
+
+			let addToCart = [...handleInventory(cartItems, action.payload, action.type)];
+
 			return {
 				...state,
-				cartItems: [...cartItems],
-				...sumItems([...cartItems]),
+				cartItems: [...addToCart],
+				...sumItems([...addToCart]),
 			};
 		case 'VIEW_ITEM':
 			state.viewItem = { ...action.payload };
@@ -62,41 +116,17 @@ export const CartReducer = (state, action) => {
 		case 'REMOVE_ITEM':
 			return {
 				...state,
-				...sumItems(state.cartItems.filter(item => item.id !== action.payload.id && item.size !== action.payload.size)),
-				cartItems: [
-					...state.cartItems.filter(item => item.id !== action.payload.id && item.size !== action.payload.size),
-				],
+				...sumItems(state.cartItems.filter(item => item.name !== action.payload.name)),
+				cartItems: [...state.cartItems.filter(item => item.name !== action.payload.name)],
 			};
 		case 'INCREASE':
-			const addMore = state.cartItems.map(item =>
-				item.name === action.payload.name && action.payload.cart * action.payload.bulk < action.payload.quantity
-					? { ...item, cart: item.cart + 1 }
-					: item
-			);
-			return {
-				...state,
-				cartItems: addMore,
-				...sumItems(addMore),
-			};
 		case 'DECREASE':
-			const oneLess = state.cartItems.map(item =>
-				item.id === action.payload.id && item.size === action.payload.size && action.payload.cart > 0
-					? { ...item, cart: item.cart - 1 }
-					: item
-			);
+			let moreOrLess = [...handleInventory(state.cartItems, action.payload, action.type)];
 			return {
 				...state,
-				cartItems: oneLess,
-				...sumItems(oneLess),
+				cartItems: [...moreOrLess],
+				...sumItems([...moreOrLess]),
 			};
-		// case 'SET_QUANTITY':
-		// 	console.log(action.qty);
-		// 	return {
-		// 		cartItems: state.cartItems.map(item =>
-		// 			item.id === action.payload.id ? { ...item, cart: action.qty } : item
-		// 		),
-		// 		...sumItems(state.cartItems),
-		// 	};
 		case 'CHECKOUT':
 			return {
 				cartItems: [],
