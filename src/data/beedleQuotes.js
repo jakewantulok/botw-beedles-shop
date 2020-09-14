@@ -57,4 +57,10 @@ export const beedleQuotes = [
 		condition: 'greeting',
 		quote: "OHHHHH! A customer! Welcome to Beedle's Shop! I deal in pretty much anything and everything!",
 	},
+	{
+		id: 11,
+		condition: 'greeting',
+		quote:
+			"I stock many special bugs and must-have items for travelers, and I always charge a fair price... or my name's not Beedle!",
+	},
 ];
