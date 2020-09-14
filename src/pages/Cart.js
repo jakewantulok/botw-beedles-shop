@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Layout from '../components/Layout';
 import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import CartProducts from '../components/CartProducts';
@@ -26,7 +25,7 @@ export const Cart = () => {
 	);
 
 	return (
-		<Layout title="Cart" description="This is the Cart page">
+		<>
 			<div className="text-center mt-5">
 				<h1>Cart</h1>
 			</div>
@@ -34,7 +33,7 @@ export const Cart = () => {
 			<div className="row no-gutters justify-content-center">
 				{cartItems.length > 0 ? <CartProducts /> : <>{checkout ? buyMoreBtn : cartEmptyMsg}</>}
 			</div>
-		</Layout>
+		</>
 	);
 };
 
