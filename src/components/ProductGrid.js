@@ -8,14 +8,14 @@ const ProductGrid = () => {
 	const renderProducts = products.map(product => <ProductItem key={product.id} product={product} />);
 
 	return (
-		<div>
+		<>
 			<div className="row">
 				<div className="col-sm-8">
 					<div className="py-3">{products.length} Products</div>
 				</div>
 			</div>
 			<div>{renderProducts}</div>
-		</div>
+		</>
 	);
 };
 
