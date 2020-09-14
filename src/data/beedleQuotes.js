@@ -12,23 +12,24 @@ export const beedleQuotes = [
 	{
 		id: 2,
 		condition: 'return',
-		quote: "Oh! I knew I'd see you again.\nI think that technically makes you my stalker! HAHAHAHA!",
+		quote: "Oh! I knew I'd see you again. I think that technically makes you my stalker! HAHAHAHA!",
 	},
 	{
 		id: 3,
 		condition: 'return',
-		quote: 'Whaaa? You came to see me again?!\nThat makes Beedle SO HAPPY!',
+		quote: 'Whaaa? You came to see me again?! That makes Beedle SO HAPPY!',
 	},
 	{
 		id: 4,
 		condition: 'checkout',
-		quote: 'Thanks for the business!\nThank you very much!\nHope to see you again soon!',
+		quote: 'Thanks for the business! Thank you very much! Hope to see you again soon!',
 	},
 	{
 		id: 5,
 		condition: 'return',
-		quote: "Hey! You're a great customer, and since today is Customer Appreciation Day...\nI want you to have this!",
-		gift: 'Ancient Arrow x1',
+		quote: "Hey! You're a great customer, and since today is Customer Appreciation Day...",
+		offer: 'Ancient Arrow x1',
+		offerCode: 'URMYFAVE',
 	},
 	{
 		id: 6,
@@ -44,11 +45,16 @@ export const beedleQuotes = [
 	{
 		id: 8,
 		condition: 'return',
-		quote: "Hey! It's you again.\nOl' Beedle's glad to see you!",
+		quote: "Hey! It's you again. Ol' Beedle's glad to see you!",
 	},
 	{
 		id: 9,
 		condition: 'clear',
-		quote: "Oh! That's too bad...\nHope to see you around.",
+		quote: "Oh! That's too bad... Hope to see you around.",
+	},
+	{
+		id: 10,
+		condition: 'greeting',
+		quote: "OHHHHH! A customer! Welcome to Beedle's Shop! I deal in pretty much anything and everything!",
 	},
 ];
