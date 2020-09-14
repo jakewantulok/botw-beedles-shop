@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import ATC from './ATC';
 import QtyMsg from './QtyMsg';
 import ClearItem from './ClearItem';
+
+const Btn = styled.button`
+	margin: 10px 10px 10px 0;
+`;
+
+const Price = styled.span`
+	padding-right: 10px;
+`;
 
 class ProductItem extends Component {
 	constructor(props) {
@@ -35,36 +44,35 @@ class ProductItem extends Component {
 		};
 
 		const optionBtns = product.sale.map((option, i) => (
-			<button
+			<Btn
 				key={i}
 				className={this.state.name === product.name + ' ' + option.name ? 'btn btn-dark' : 'btn btn-outline-dark'}
 				onClick={() => selectOption(option)}>
 				{option.name}
-			</button>
+			</Btn>
 		));
 
 		return (
 			<div key={product.id} hidden={!product.price}>
 				<h3>{this.state.name}</h3>
 				<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
-				<p>
+				<div>
 					<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
-					<span>{this.state.price}</span>
+					<Price>{this.state.price}</Price>
 					<span
 						hidden={100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) <= 0}
-						style={{ textDecoration: this.state.price / this.state.bulk < product.price && 'line-through' }}
-						className="text-success">
+						className="text-success font-italic">
 						{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) + '% Off!'}
 					</span>
-				</p>
+				</div>
 				<div>{optionBtns}</div>
 				<div>
 					{this.state.name ? (
 						<ATC item={this.state} />
 					) : (
-						<button disabled={true} className="btn btn-outline-dark">
+						<Btn disabled={true} className="btn btn-outline-dark">
 							SELECT A SIZE
-						</button>
+						</Btn>
 					)}
 					<QtyMsg item={this.state} />
 				</div>

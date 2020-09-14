@@ -1,6 +1,11 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import { InCart } from './InCart';
+
+const Btn = styled.button`
+	margin: 10px 10px 10px 0;
+`;
 
 const ATC = props => {
 	const { item } = props;
@@ -18,23 +23,23 @@ const ATC = props => {
 	};
 
 	const atcBtn = (
-		<button onClick={() => resetChecker()} className="btn btn-primary atc-btn">
+		<Btn onClick={() => resetChecker()} className="btn btn-primary atc-btn">
 			ADD TO CART
-		</button>
+		</Btn>
 	);
 
 	const addMoreBtn = (
-		<button
+		<Btn
 			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity}
 			onClick={() => addMore()}
 			className="btn btn-success add-more-btn">
 			ADD MORE
-		</button>
+		</Btn>
 	);
 	const soldOutBtn = (
-		<button disabled={true} className="btn btn-outline-danger">
+		<Btn disabled={true} className="btn btn-outline-danger">
 			SOLD OUT
-		</button>
+		</Btn>
 	);
 
 	return InCart(item, cartItems) ? (
