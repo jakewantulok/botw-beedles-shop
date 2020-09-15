@@ -14,7 +14,7 @@ const ProductGrid = () => {
 					<div className="py-3">{products.length} Products</div>
 				</div>
 			</div>
-			<div>{renderProducts}</div>
+			<div className="row">{renderProducts}</div>
 		</>
 	);
 };
