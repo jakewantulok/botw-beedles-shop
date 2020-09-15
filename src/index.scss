@@ -48,7 +48,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #307ca0;
+  background-color: #307ca0;
+  background-image: url("/img/background_pattern.png");
+  background-repeat: repeat;
   color: #f9f8dc;
 }
 
