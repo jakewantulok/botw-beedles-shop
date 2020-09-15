@@ -24,7 +24,7 @@ const ATC = props => {
 
 	const atcBtn = (
 		<Btn onClick={() => resetChecker()} className="btn btn-primary atc-btn">
-			ADD TO CART
+			Add To Cart
 		</Btn>
 	);
 
@@ -33,11 +33,11 @@ const ATC = props => {
 			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity}
 			onClick={() => addMore()}
 			className="btn btn-success add-more-btn">
-			ADD MORE
+			Add More
 		</Btn>
 	);
 	const soldOutBtn = (
-		<Btn disabled={true} className="btn btn-outline-danger">
+		<Btn disabled={true} className="btn btn-muted">
 			SOLD OUT
 		</Btn>
 	);
