@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { CloseIcon } from './Icons';
 import { beedleQuotes } from '../data/beedleQuotes';
 
 const SpeechBubble = styled.button`
@@ -12,7 +13,7 @@ const SpeechBubble = styled.button`
 	background: #16161d;
 	padding: 5px 5px 5px 10px;
 	border: 0px;
-	border-radius: 15px 25px 0px 15px;
+	border-radius: 15px 15px 0px 15px;
 	z-index: 999;
 	min-width: 235px;
 	max-width: 235px;
@@ -26,14 +27,11 @@ const CloseBubble = styled.div`
 	width: 26px;
 	height: 26px;
 	border-radius: 50%;
-	background: #eee;
-	color: #16161d;
 	text-align: center;
 	font-weight: 600;
 	font-size: 17px;
 	font-style: normal;
 	position: absolute;
-	box-shadow: 5px 5px 10px #16161d50;
 	top: -5%;
 	right: -10%;
 `;
@@ -62,12 +60,14 @@ const Quote = () => {
 				{offer && (
 					<Offer>
 						<span>
-							Use code <strong className="text-info">'{offerCode}'</strong> for a free{' '}
-							<strong className="text-info">{offer}</strong> during checkout!
+							Use code <strong className="text-info">'{offerCode}'</strong> for a free
+							<strong className="text-info">{' ' + offer + ' '}</strong> at checkout!
 						</span>
 					</Offer>
 				)}
-				<CloseBubble>X</CloseBubble>
+				<CloseBubble>
+					<CloseIcon width={25} color="white" />
+				</CloseBubble>
 			</SpeechBubble>
 		)
 	);
