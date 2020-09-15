@@ -15,7 +15,7 @@ const QtyMsg = props => {
 					? false
 					: true
 			}
-			className="sizeQty text-danger">
+			className="sizeQty text-light font-italic">
 			{InCart(item, cartItems) ? item.quantity - InCart(item, cartItems, 'cart') : item.quantity} LEFT!
 		</span>
 	);
