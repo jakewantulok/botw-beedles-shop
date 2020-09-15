@@ -29,7 +29,8 @@ export const beedleQuotes = [
 		condition: 'return',
 		quote: "Hey! You're a great customer, and since today is Customer Appreciation Day...",
 		offer: 'Ancient Arrow x1',
-		offerCode: 'URMYFAVE',
+		offerCode: 'HYRULE',
+		offerType: 'free',
 	},
 	{
 		id: 6,
