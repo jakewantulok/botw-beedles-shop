@@ -6,8 +6,8 @@ const ClearItem = props => {
 	const { removeProduct, cartItems } = useContext(CartContext);
 	const hideOnClear = () => !cartItems.find(obj => obj.name === item.name);
 	return (
-		<button hidden={hideOnClear()} onClick={() => removeProduct(item)} className="btn btn-sm text-danger">
-			{children || 'CLEAR'}
+		<button hidden={hideOnClear()} onClick={() => removeProduct(item)} className="btn btn-sm btn-danger">
+			{children} Clear All
 		</button>
 	);
 };
