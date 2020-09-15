@@ -46,38 +46,40 @@ class ProductItem extends Component {
 		const optionBtns = product.sale.map((option, i) => (
 			<Btn
 				key={i}
-				className={this.state.name === product.name + ' ' + option.name ? 'btn btn-dark' : 'btn btn-outline-dark'}
+				className={
+					this.state.name === product.name + ' ' + option.name ? 'btn btn-sm btn-dark' : 'btn btn-sm btn-light'
+				}
+				style={{ minWidth: 41 }}
 				onClick={() => selectOption(option)}>
 				{option.name}
 			</Btn>
 		));
 
 		return (
-			<div key={product.id} hidden={!product.price}>
-				<h3>{this.state.name}</h3>
-				<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
+			<div key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
 				<div>
-					<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
-					<Price>{this.state.price}</Price>
-					<span
-						hidden={100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) <= 0}
-						className="text-success font-italic">
-						{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) + '% Off!'}
-					</span>
-				</div>
-				<div>{optionBtns}</div>
-				<div>
-					{this.state.name ? (
-						<ATC item={this.state} />
-					) : (
-						<Btn disabled={true} className="btn btn-outline-dark">
-							SELECT A SIZE
-						</Btn>
-					)}
-					<QtyMsg item={this.state} />
-				</div>
-				<div>
-					<ClearItem item={this.state} />
+					<h3>{this.state.name}</h3>
+					<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
+					<div>
+						<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
+						<Price>{this.state.price}</Price>
+						<span
+							hidden={100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) <= 0}
+							className="text-light font-italic">
+							{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0)}% Off!
+						</span>
+					</div>
+					<div>{optionBtns}</div>
+					<div>
+						{this.state.name ? (
+							<ATC item={this.state} />
+						) : (
+							<Btn disabled={true} className="btn btn-dark">
+								SELECT AN OPTION
+							</Btn>
+						)}
+						<QtyMsg item={this.state} />
+					</div>
 				</div>
 			</div>
 		);
