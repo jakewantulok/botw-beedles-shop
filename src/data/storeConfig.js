@@ -1,6 +1,6 @@
 export const storeConfig = {
 	siteURL: '',
-	siteTitle: "Beedle's Shop",
+	siteTitle: "Beedle's",
 	siteDescription: "OHHHHH! A customer! Welcome to Beedle's Shop! I deal in pretty much anything and everything!",
 	siteAuthor: {
 		name: 'Jake Wantulok',
