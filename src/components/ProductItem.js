@@ -69,7 +69,7 @@ class ProductItem extends Component {
 							{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0)}% Off!
 						</span>
 					</div>
-					<div>{optionBtns}</div>
+					<div>{product.sale.length > 1 && optionBtns}</div>
 					<div>
 						{this.state.name ? (
 							<ATC item={this.state} />

@@ -182,4 +182,22 @@ export const productData = [
 			},
 		],
 	},
+
+	{
+		id: 6,
+		name: 'Octo Balloon',
+		category: 'Monster Part',
+		photo: 'octo_balloon.png',
+		description:
+			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
+		quantity: 25,
+		price: 20,
+		sale: [
+			{
+				name: '',
+				bulk: 1,
+				price: 20,
+			},
+		],
+	},
 ];
