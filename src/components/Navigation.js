@@ -6,11 +6,13 @@ import { storeConfig } from '../data/storeConfig';
 import BeedleBanner from './BeedleBanner';
 // #245e79
 
-const Navigation = () => {
+const Navigation = props => {
 	const { itemCount } = useContext(CartContext);
 	const { siteTitle } = storeConfig;
+	const { themeHandler, theme } = props;
+
 	return (
-		<Navbar bg="light" styleexpand="md">
+		<Navbar bg={theme} className={theme === 'light' ? 'navbar-light' : 'navbar-dark'} styleexpand="md">
 			<a href="/">
 				<BeedleBanner />
 			</a>
@@ -25,6 +27,7 @@ const Navigation = () => {
 						<CartIcon width={20} />
 						Cart ({itemCount})
 					</Nav.Link>
+					<button onClick={() => themeHandler()} />
 					{/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="action/3.2">Another action</NavDropdown.Item>
