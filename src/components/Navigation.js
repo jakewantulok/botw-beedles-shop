@@ -12,7 +12,7 @@ const Navigation = props => {
 	const { themeHandler, theme } = props;
 
 	return (
-		<Navbar bg={theme} className={theme === 'light' ? 'navbar-light' : 'navbar-dark'} styleexpand="md">
+		<Navbar bg={theme} className={theme === 'light' ? 'navbar-light' : 'navbar-dark'} expand="md">
 			<a href="/">
 				<BeedleBanner />
 			</a>
