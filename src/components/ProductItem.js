@@ -7,22 +7,43 @@ const Btn = styled.button`
 	margin: 10px 10px 10px 0;
 `;
 
+const Options = styled.div`
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+`;
+
+const ProductHeader = styled.div`
+	display: flex;
+	flex-flow: wrap;
+	align-items: center;
+`;
+
+const Option = styled.button`
+	display: flex;
+	justify-content: center;
+	margin: 10px 0;
+	width: 40px;
+`;
+
 const Price = styled.span`
 	padding-right: 10px;
 `;
 
 const Product = styled.div`
-	margin: 15px 0;
-	padding: 15px;
-	border: 1px solid #16161d00;
-	border-radius: 15px;
-	transition: background-color 0.5s;
-	transition: border 0.5s;
-	&:hover {
-		background-color: #16161d;
-		border: 1px solid grey;
-		transition: background-color 0.25s;
-		transition: border 0.25s;
+	& > div {
+		margin: 15px 0px;
+		padding: 15px;
+		border: 1px solid #16161d00;
+		border-radius: 15px;
+		transition: background-color 0.5s;
+		transition: border 0.5s;
+		&:hover {
+			background-color: #16161d;
+			border: 1px solid grey;
+			transition: background-color 0.25s;
+			transition: border 0.25s;
+		}
 	}
 `;
 
@@ -58,32 +79,33 @@ class ProductItem extends Component {
 		};
 
 		const optionBtns = product.sale.map((option, i) => (
-			<Btn
+			<Option
 				key={i}
 				className={
 					this.state.name === product.name + ' ' + option.name ? 'btn btn-sm btn-dark' : 'btn btn-sm btn-light'
 				}
-				style={{ minWidth: 41 }}
 				onClick={() => selectOption(option)}>
-				{option.name}
-			</Btn>
+				<span>{option.name}</span>
+			</Option>
 		));
 
 		return (
-			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
+			<Product key={product.id} hidden={!product.price} className="col-6 col-sm-6 col-md-4 col-lg-3">
 				<div>
-					<h3>{this.state.name}</h3>
-					<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
+					<ProductHeader>
+						<img src={'./img/products/' + product.photo} alt={product.name} width={60} />
+						<h4>{this.state.name}</h4>
+					</ProductHeader>
 					<div>
 						<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
 						<Price>{this.state.price}</Price>
 						<span
 							hidden={100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0) <= 0}
-							className="text-light font-italic">
+							className="text-info font-italic">
 							{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0)}% Off!
 						</span>
 					</div>
-					<div>{product.sale.length > 1 && optionBtns}</div>
+					<Options>{product.sale.length > 1 && optionBtns}</Options>
 					<div>
 						{this.state.name ? (
 							<ATC item={this.state} />
