@@ -10,6 +10,7 @@ const Products = styled.div`
 	border-radius: 15px;
 	padding: 15px;
 	margin: 15px 0;
+	box-shadow: 5px 5px 10px #16161d50;
 `;
 
 const ProductGrid = () => {
