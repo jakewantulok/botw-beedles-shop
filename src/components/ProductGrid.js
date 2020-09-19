@@ -13,6 +13,12 @@ const Products = styled.div`
 	box-shadow: 5px 5px 10px #16161d50;
 `;
 
+const Filter = styled.div`
+	& button {
+		margin-right: 15px;
+	}
+`;
+
 const ProductGrid = () => {
 	const { products } = useContext(ProductContext);
 	const renderProducts = products.map(product => <ProductItem key={product.id} product={product} />);
@@ -20,7 +26,12 @@ const ProductGrid = () => {
 		<>
 			<div className="row">
 				<div className="col-sm-8">
-					<div className="py-3">{products.length} Products</div>
+					<div className="py-3">
+						<Filter>
+							<button class="btn btn-dark">Filter</button>
+							<span>{products.length} Products</span>
+						</Filter>
+					</div>
 				</div>
 			</div>
 			<Products>{renderProducts}</Products>
