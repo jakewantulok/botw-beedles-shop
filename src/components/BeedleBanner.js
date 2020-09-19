@@ -39,7 +39,7 @@ const Banner = styled.div`
 const BeedleBanner = ({ children }) => (
 	<Wrapper>
 		<Banner>
-			<img src="/img/beedle_shop_banner.png" />
+			<img src="/img/beedle_shop_banner.png" alt="Beedle's Shop Banner" />
 			{children}
 		</Banner>
 	</Wrapper>
