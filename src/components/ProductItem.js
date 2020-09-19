@@ -9,7 +9,6 @@ const Btn = styled.button`
 
 const Options = styled.div`
 	display: flex;
-	justify-content: space-between;
 	flex-wrap: wrap;
 `;
 
@@ -22,8 +21,9 @@ const ProductHeader = styled.div`
 const Option = styled.button`
 	display: flex;
 	justify-content: center;
-	margin: 10px 0;
-	width: 40px;
+	margin: 8px 8px 0 0;
+	width: 30px;
+	font-size: 13px;
 `;
 
 const Price = styled.span`
@@ -44,6 +44,23 @@ const Product = styled.div`
 			transition: background-color 0.25s;
 			transition: border 0.25s;
 		}
+	}
+`;
+
+const ProductTitle = styled.div`
+	max-width: 115px;
+`;
+
+const ProductImg = styled.div`
+	width: 75px;
+	height: 75px;
+	margin: 0 15px 15px 0;
+	position: relative;
+	& img {
+		position: absolute;
+		width: 90px;
+		top: -5px;
+		left: -5px;
 	}
 `;
 
@@ -93,8 +110,12 @@ class ProductItem extends Component {
 			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
 				<div>
 					<ProductHeader>
-						<img src={'./img/products/' + product.photo} alt={product.name} width={75} />
-						<h4>{this.state.name}</h4>
+						<ProductImg>
+							<img src={'./img/products/' + product.photo} alt={product.name} />
+						</ProductImg>
+						<ProductTitle>
+							<h5>{this.state.name}</h5>
+						</ProductTitle>
 					</ProductHeader>
 					<div>
 						<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
