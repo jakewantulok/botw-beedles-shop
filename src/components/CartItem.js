@@ -1,14 +1,25 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
 import FormatCurrency from './FormatCurrency';
 import ClearItem from './ClearItem';
 
+const Item = styled.div`
+	margin: 15px 0;
+	padding: 15px;
+	border-radius: 15px;
+	transition: background-color 0.5s;
+	transition: border 0.5s;
+	background-color: rgba(22, 22, 29, 90%);
+	}
+`;
+
 const CartItem = ({ product }) => {
 	const { increase, decrease, removeProduct } = useContext(CartContext);
 
 	return (
-		<div className="row no-gutters py-2">
+		<Item className="row no-gutters py-2">
 			<div className="col-sm-2 p-2">
 				<img src={'./img/products/' + product.photo} alt={product.name} width={75} />
 			</div>
@@ -55,7 +66,7 @@ const CartItem = ({ product }) => {
 					</button>
 				)}
 			</div>
-		</div>
+		</Item>
 	);
 };
 
