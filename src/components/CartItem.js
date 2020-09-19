@@ -36,15 +36,8 @@ const CartItem = ({ product }) => {
 					</span>
 				</p>
 			</div>
-			<div className="col-sm-2 p-2">
-				<h5 className="mb-0">
-					Stock: {product.cart}
-					<ClearItem item={product}>
-						<TrashIcon width={15} />
-					</ClearItem>
-				</h5>
-			</div>
-			<div className="col-sm-4 p-2">
+			<div className="col-sm-3 p-2">
+				<h3 className="mb-0">{product.cart}</h3>
 				<button
 					onClick={() => increase(product)}
 					className={
@@ -66,6 +59,7 @@ const CartItem = ({ product }) => {
 					</button>
 				)}
 			</div>
+			<div className="col-sm-3 p-2"></div>
 		</Item>
 	);
 };
