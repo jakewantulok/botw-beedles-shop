@@ -90,10 +90,10 @@ class ProductItem extends Component {
 		));
 
 		return (
-			<Product key={product.id} hidden={!product.price} className="col-6 col-sm-6 col-md-4 col-lg-3">
+			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
 				<div>
 					<ProductHeader>
-						<img src={'./img/products/' + product.photo} alt={product.name} width={60} />
+						<img src={'./img/products/' + product.photo} alt={product.name} width={75} />
 						<h4>{this.state.name}</h4>
 					</ProductHeader>
 					<div>
