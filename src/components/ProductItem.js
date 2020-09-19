@@ -21,9 +21,10 @@ const ProductHeader = styled.div`
 const Option = styled.button`
 	display: flex;
 	justify-content: center;
-	margin: 8px 8px 0 0;
-	width: 30px;
-	font-size: 13px;
+	margin: 0 8px 0 0;
+	width: 28px;
+	height: 28px;
+	font-size: 12px;
 `;
 
 const Price = styled.span`
@@ -64,6 +65,34 @@ const ProductImg = styled.div`
 	}
 `;
 
+const Sale = styled.div`
+	margin-bottom: 10px;
+`;
+
+const DescTitle = styled.div`
+	position: relative;
+	& span {
+		position: absolute;
+		top: -6px;
+		font-size: 12px;
+	}
+`;
+
+const Desc = styled.div`
+	position: relative;
+	top: 12px;
+	max-width: 200px;
+	height: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 12px;
+	font-style: italic;
+	& span:nth-child(2) {
+		line-height: 0;
+	}
+`;
+
 class ProductItem extends Component {
 	constructor(props) {
 		super();
@@ -99,7 +128,11 @@ class ProductItem extends Component {
 			<Option
 				key={i}
 				className={
-					this.state.name === product.name + ' ' + option.name ? 'btn btn-sm btn-dark' : 'btn btn-sm btn-light'
+					option.name
+						? this.state.name === product.name + ' ' + option.name
+							? 'btn btn-sm btn-dark'
+							: 'btn btn-sm btn-light'
+						: 'btn btn-sm'
 				}
 				onClick={() => selectOption(option)}>
 				<span>{option.name}</span>
@@ -117,7 +150,7 @@ class ProductItem extends Component {
 							<h5>{this.state.name}</h5>
 						</ProductTitle>
 					</ProductHeader>
-					<div>
+					<Sale>
 						<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
 						<Price>{this.state.price}</Price>
 						<span
@@ -125,8 +158,19 @@ class ProductItem extends Component {
 							className="text-info font-italic">
 							{100 - ((this.state.price / this.state.bulk / product.price) * 100).toFixed(0)}% Off!
 						</span>
-					</div>
-					<Options>{product.sale.length > 1 && optionBtns}</Options>
+					</Sale>
+					{product.sale.length > 1 ? (
+						<Options>{optionBtns}</Options>
+					) : (
+						<>
+							<DescTitle>
+								<span>Description: </span>
+							</DescTitle>
+							<Desc>
+								<span>{product.description}</span>
+							</Desc>
+						</>
+					)}
 					<div>
 						{this.state.name ? (
 							<ATC item={this.state} />
