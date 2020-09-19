@@ -9,6 +9,11 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     background-color: ${({ theme }) => theme.backgroundColor};
-    color: ${({ theme }) => theme.color};
+    color: ${({ theme }) => theme.text}
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: ${({ theme }) => theme.text};
+  }
+
 `;
