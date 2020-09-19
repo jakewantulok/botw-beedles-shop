@@ -25,7 +25,7 @@ const Banner = styled.div`
 		height: 0;
 		border-left: 30px solid transparent;
 		border-right: 30px solid transparent;
-		border-top: 24px solid white;
+		border-top: 25px solid white;
 		clear: both;
 		z-index: 998;
 	}
