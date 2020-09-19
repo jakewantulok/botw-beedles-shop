@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import ATC from './ATC';
 import QtyMsg from './QtyMsg';
-import ClearItem from './ClearItem';
 
 const Btn = styled.button`
 	margin: 10px 10px 10px 0;
@@ -10,6 +9,21 @@ const Btn = styled.button`
 
 const Price = styled.span`
 	padding-right: 10px;
+`;
+
+const Product = styled.div`
+	margin: 15px 0;
+	padding: 15px;
+	border: 1px solid #16161d00;
+	border-radius: 15px;
+	transition: background-color 0.5s;
+	transition: border 0.5s;
+	&:hover {
+		background-color: #16161d;
+		border: 1px solid grey;
+		transition: background-color 0.25s;
+		transition: border 0.25s;
+	}
 `;
 
 class ProductItem extends Component {
@@ -56,7 +70,7 @@ class ProductItem extends Component {
 		));
 
 		return (
-			<div key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
+			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
 				<div>
 					<h3>{this.state.name}</h3>
 					<img src={'./img/products/' + product.photo} alt={product.name} width={96} />
@@ -81,7 +95,7 @@ class ProductItem extends Component {
 						<QtyMsg item={this.state} />
 					</div>
 				</div>
-			</div>
+			</Product>
 		);
 	}
 }
