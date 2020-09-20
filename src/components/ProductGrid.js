@@ -1,7 +1,10 @@
 import React, { useContext, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
 import { ProductContext } from '../context/ProductContext';
+import { CloseIcon } from './Icons';
 
 const Products = styled.div`
 	display: flex;
@@ -25,7 +28,7 @@ const ProductGrid = () => {
 	let filtersArr = [...products.map(product => product.category)];
 
 	const filters = [...new Set(filtersArr)].map((option, i) => (
-		<button key={i} className="btn btn-dark" onClick={() => handleFilter(option)}>
+		<button key={i} className="btn btn-dark" onClick={() => handleFilterSelect(option)}>
 			{option}
 		</button>
 	));
@@ -39,20 +42,47 @@ const ProductGrid = () => {
 			? filterProducts.map(product => <ProductItem key={product.id} product={product} />)
 			: products.map(product => <ProductItem key={product.id} product={product} />);
 
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+	const handleFilterSelect = str => {
+		handleFilter(str);
+		handleClose();
+	};
+
 	return (
 		<>
 			<div className="row">
 				<div className="col-sm-8">
 					<div className="py-3">
 						<Filter>
-							<button className="btn btn-dark" onClick={() => handleFilter('All')}>
-								All
-							</button>
-							{filters}
+							<Button variant="primary" onClick={handleShow}>
+								Filter
+							</Button>
 							<span>
 								{renderProducts.length > 1 ? renderProducts.length + ' Products' : renderProducts.length + ' Product'}
 							</span>
+							<Button variant="secondary" hidden={filter === 'All'} onClick={() => handleFilter('All')}>
+								<CloseIcon width={22} color={'white'} />
+								{filter}
+							</Button>
 						</Filter>
+						<Modal show={show} onHide={handleClose} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+							<Modal.Header>
+								<Modal.Title>Filter Products By Category</Modal.Title>
+								<Button variant="secondary" onClick={handleClose}>
+									<CloseIcon width={22} color={'white'} />
+								</Button>
+							</Modal.Header>
+							<Modal.Body>
+								<button className="btn btn-dark" onClick={() => handleFilterSelect('All')}>
+									All
+								</button>
+								{filters}
+							</Modal.Body>
+						</Modal>
 					</div>
 				</div>
 			</div>
