@@ -35,13 +35,11 @@ const Product = styled.div`
 	& > div {
 		margin: 15px 0px;
 		padding: 15px;
-		border: 1px solid #16161d00;
 		border-radius: 15px;
 		transition: background-color 0.5s;
 		transition: border 0.5s;
 		&:hover {
-			background-color: #16161d;
-			border: 1px solid grey;
+			background-color: rgba(22, 22, 29, 50%);
 			transition: background-color 0.25s;
 			transition: border 0.25s;
 		}
