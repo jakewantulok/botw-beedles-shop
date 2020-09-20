@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
 import { ProductContext } from '../context/ProductContext';
@@ -21,15 +21,37 @@ const Filter = styled.div`
 
 const ProductGrid = () => {
 	const { products } = useContext(ProductContext);
-	const renderProducts = products.map(product => <ProductItem key={product.id} product={product} />);
+
+	let filtersArr = [...products.map(product => product.category)];
+
+	const filters = [...new Set(filtersArr)].map((option, i) => (
+		<button key={i} className="btn btn-dark" onClick={() => handleFilter(option)}>
+			{option}
+		</button>
+	));
+
+	const [filter, handleFilter] = useState('All');
+
+	const filterProducts = products.filter(product => filter === product.category);
+
+	const renderProducts =
+		filter !== 'All'
+			? filterProducts.map(product => <ProductItem key={product.id} product={product} />)
+			: products.map(product => <ProductItem key={product.id} product={product} />);
+
 	return (
 		<>
 			<div className="row">
 				<div className="col-sm-8">
 					<div className="py-3">
 						<Filter>
-							<button class="btn btn-dark">Filter</button>
-							<span>{products.length} Products</span>
+							<button className="btn btn-dark" onClick={() => handleFilter('All')}>
+								All
+							</button>
+							{filters}
+							<span>
+								{renderProducts.length > 1 ? renderProducts.length + ' Products' : renderProducts.length + ' Product'}
+							</span>
 						</Filter>
 					</div>
 				</div>

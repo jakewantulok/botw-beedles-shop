@@ -2,7 +2,7 @@ export const productData = [
 	{
 		id: 0,
 		name: 'Arrow',
-		category: 'arrows',
+		category: 'Arrows',
 		photo: 'arrow.png',
 		description: 'A common arrow. Its shaft was carved from the wood of a sturdy tree',
 		quantity: 210,
@@ -33,7 +33,7 @@ export const productData = [
 	{
 		id: 1,
 		name: 'Fire Arrow',
-		category: 'arrows',
+		category: 'Arrows',
 		photo: 'fire_arrow.png',
 		description: 'Imbues your arrows with a fire effect, at the cost of stamina.',
 		quantity: 123,
