@@ -3,52 +3,64 @@ import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import CartItem from './CartItem';
 
+const repeatedStyles = {
+	card: `
+		padding: 15px;
+		background-color: rgba(22, 22, 29, 75%);
+		border-radius: 15px;`,
+};
+
 const Info = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	& div {
 		padding-left: 0;
 		& div {
-			padding: 15px;
-			border-radius: 15px;
-			transition: background-color 0.5s;
-			transition: border 0.5s;
-			background-color: rgba(22, 22, 29, 90%);
-			border: 1px solid #16161d00;
+			${repeatedStyles.card}
 		}
 		&:nth-child(3) div {
 			margin-right: -15px;
+			line-height: 0;
+		}
+		& :not(div) {
+			margin: 0;
 		}
 	}
 `;
 
-const CartProducts = () => {
+const CheckoutCard = styled.div`
+	${repeatedStyles.card}
+`;
+
+const CartGrid = () => {
 	const { cartItems, total, savings, savingsPercent, itemCount, handleCheckout, clearCart } = useContext(CartContext);
+
+	const Items = cartItems.map(product => <CartItem key={product.id} product={product} />);
+
 	return (
 		<>
-			<div>
+			<div className="col-12 col-sm-8">
 				<Info>
-					<div class="col-sm-6">
+					<div className="col-12 col-sm-6">
 						<div>
 							<h4>Items</h4>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div className="col-12 col-sm-3">
 						<div>
-							<h4>Stock</h4>
+							<h4>Qty</h4>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div className="col-12 col-sm-3">
 						<div>
 							<h4>Price</h4>
 						</div>
 					</div>
 				</Info>
-				{cartItems.map(product => (
-					<CartItem key={product.id} product={product} />
-				))}
+				{Items}
 			</div>
-			<div id="goToCheckout" className="card card-body col-sm-3 p-3">
+			<div className="col-12 col-sm-1" />
+			<CheckoutCard id="goToCheckout" className="col-12 col-sm-3">
 				<p className="mb-1">Total Items</p>
 				<h4 className="mb-3 txt-right">{itemCount}</h4>
 				<p className="mb-1">Total Payment</p>
@@ -65,9 +77,9 @@ const CartProducts = () => {
 						CLEAR ALL
 					</button>
 				</div>
-			</div>
+			</CheckoutCard>
 		</>
 	);
 };
 
-export default CartProducts;
+export default CartGrid;
