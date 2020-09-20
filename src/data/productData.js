@@ -422,7 +422,7 @@ export const productData = [
 	{
 		id: 20,
 		name: 'Sunset Firefly',
-		category: 'Firelies',
+		category: 'Fireflies',
 		photo: 'sunset_firefly.png',
 		description:
 			'These fireflies glow gently in the dark. When cooked with monster parts, the compound that causes it to glow results in an elixir that will allow you to move more quietly.',
