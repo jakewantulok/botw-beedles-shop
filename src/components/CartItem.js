@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
 import FormatCurrency from './FormatCurrency';
-import ClearItem from './ClearItem';
 
 const Item = styled.div`
 	margin: 15px 0;
