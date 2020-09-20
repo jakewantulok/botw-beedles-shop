@@ -10,7 +10,7 @@ const Item = styled.div`
 	border-radius: 15px;
 	transition: background-color 0.5s;
 	transition: border 0.5s;
-	background-color: rgba(22, 22, 29, 90%);
+	background-color: rgba(22, 22, 29, 75%);
 	}
 `;
 
@@ -24,16 +24,6 @@ const CartItem = ({ product }) => {
 			</div>
 			<div className="col-sm-4 p-2">
 				<h4 className="mb-1">{product.name}</h4>
-				<p className="mb-1">
-					<span className="text-success" hidden={product.sale === product.price}>
-						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
-					</span>
-					<span
-						style={{ textDecoration: product.sale < product.price && 'line-through' }}
-						className={product.sale < product.price ? 'text-muted' : ''}>
-						{FormatCurrency(product.price)}
-					</span>
-				</p>
 			</div>
 			<div className="col-sm-3 p-2">
 				<h3 className="mb-0">{product.cart}</h3>
@@ -58,7 +48,18 @@ const CartItem = ({ product }) => {
 					</button>
 				)}
 			</div>
-			<div className="col-sm-3 p-2"></div>
+			<div className="col-sm-3 p-2">
+				<p className="mb-1">
+					<span className="text-success" hidden={product.sale === product.price}>
+						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
+					</span>
+					<span
+						style={{ textDecoration: product.sale < product.price && 'line-through' }}
+						className={product.sale < product.price ? 'text-muted' : ''}>
+						{FormatCurrency(product.price)}
+					</span>
+				</p>
+			</div>
 		</Item>
 	);
 };
