@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-import CartProducts from '../components/CartProducts';
+import CartGrid from '../components/CartGrid';
 
 export const Cart = () => {
 	const { cartItems, clearCart, checkout } = useContext(CartContext);
@@ -29,9 +29,8 @@ export const Cart = () => {
 			<div className="text-center mt-5">
 				<h1>Cart</h1>
 			</div>
-
-			<div className="row no-gutters justify-content-center">
-				{cartItems.length > 0 ? <CartProducts /> : <>{checkout ? buyMoreBtn : cartEmptyMsg}</>}
+			<div className="row justify-content-center">
+				{cartItems.length > 0 ? <CartGrid /> : <>{checkout ? buyMoreBtn : cartEmptyMsg}</>}
 			</div>
 		</>
 	);
