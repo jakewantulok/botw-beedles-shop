@@ -19,41 +19,61 @@ export const CartReducer = (state, action) => {
 
 		let updateCart;
 		let num;
+		let qty;
+
+		// detrimine num & qty if item is already in cart
+		for (let i in cartItems) {
+			if (cartItems[i].name === payload.name) {
+				num = cartItems[i].cart;
+			}
+			if (cartItems[i].name.replace(/x[1-9]/, '') === payload.name.replace(/x[1-9]/, '')) {
+				qty = cartItems[i].quantity;
+				break;
+			}
+		}
+	
+		if (typeof num === 'undefined')
+			num = 1;
+
+		if (typeof qty === 'undefined')
+			qty = payload.quantity;
+
+		
 		// change the target's cart number and update the quantity
 		switch (actionType) {
 			case 'INCREASE':
 			case 'ADD_ITEM':
-				debugger;
 				// check if it's possible to add this bulk amount against the quantity
-				if (payload.cart * payload.bulk <= payload.quantity) {
-					num = payload.quantity - payload.bulk; // this is the new qty for all items that are the same product
+				if (num * payload.bulk <= qty) {
+					qty -= payload.bulk; // this is the new qty for all items that are the same product
 					updateCart = cartItems.map(item =>
 						item.name === payload.name
 							? {
 									...item,
 									cart: payload.cart + 1, // now it will show this was added to the cart
-									quantity: num, // newly updated quantity, still need to update the rest
+									quantity: qty, // newly updated quantity, still need to update the rest
 							  }
 							: item.name.replace(/x[1-9]/, '') === payload.name.replace(/x[1-9]/, '')
 							? {
 									...item,
-									quantity: num, // newly updated quantity for the all items that are the same product
+									quantity: qty, // newly updated quantity for the all items that are the same product
 							  }
 							: item
 					);
 				} else {
 					updateCart = cartItems;
 				}
-				updateCart = updateCart.filter(item => item.cart <= 0); // if adding to cart would surpass the quantity, remove from cart
+				updateCart = updateCart.filter(item => item.cart > 0); // if adding to cart would surpass the quantity, remove from cart
+				debugger;
 				break;
 			case 'DECREASE':
-				num = payload.quantity + payload.bulk;
+				qty += payload.bulk;
 				updateCart = cartItems.map(item =>
 					item.name === payload.name && item.cart > 0
 						? {
 								...item,
 								cart: payload.cart - 1,
-								quantity: num,
+								quantity: qty,
 						  }
 						: item
 				);
@@ -69,7 +89,7 @@ export const CartReducer = (state, action) => {
 			item.name.replace(/x[1-9]/) === payload.name.replace(/x[1-9]/)
 				? {
 						...item,
-						quantity: num,
+						quantity: qty,
 				  }
 				: item
 		);
