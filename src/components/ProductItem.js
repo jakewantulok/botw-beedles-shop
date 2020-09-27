@@ -47,7 +47,7 @@ const Product = styled.div`
 `;
 
 const ProductTitle = styled.div`
-	max-width: 115px;
+	max-width: 150px;
 `;
 
 const ProductImg = styled.div`
@@ -97,8 +97,10 @@ class ProductItem extends Component {
 		this.state = {
 			name: props.product.name + ' ' + props.product.sale[0].name,
 			category: props.product.category,
+			subcategory: props.product.subcategory,
 			photo: props.product.photo,
 			description: props.product.description,
+			originalPrice: props.product.sale[0].price,
 			price: props.product.sale[0].price,
 			quantity: props.product.quantity,
 			bulk: props.product.sale[0].bulk,
@@ -138,7 +140,7 @@ class ProductItem extends Component {
 		));
 
 		return (
-			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-4 col-lg-3">
+			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-6 col-lg-4">
 				<div>
 					<ProductHeader>
 						<ProductImg>
