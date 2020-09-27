@@ -14,147 +14,109 @@ export const sumItems = cartItems => {
 };
 
 export const CartReducer = (state, action) => {
-	const handleInventory = (cartItems, payload, actionType = '') => {
-		if (!cartItems && !payload) return;
+	const getStk = (payload, cart) => {
+		let stk;
 
-		let updateCart;
-		let num;
-		let qty;
-
-		// detrimine num & qty if item is already in cart
-		for (let i in cartItems) {
-			if (cartItems[i].name === payload.name) {
-				num = cartItems[i].cart;
-			}
-			if (cartItems[i].name.replace(/x[1-9]/, '') === payload.name.replace(/x[1-9]/, '')) {
-				qty = cartItems[i].quantity;
+		for (let i in cart) {
+			if (cart[i].name === payload.name) {
+				stk = cart[i].cart;
 				break;
 			}
 		}
-	
-		if (typeof num === 'undefined')
-			num = 1;
 
-		if (typeof qty === 'undefined')
-			qty = payload.quantity;
+		stk = typeof stk === 'undefined' ? 1 : stk + 1;
 
-		
-		// change the target's cart number and update the quantity
-		switch (actionType) {
-			case 'INCREASE':
-			case 'ADD_ITEM':
-				// check if it's possible to add this bulk amount against the quantity
-				if (num * payload.bulk <= qty) {
-					qty -= payload.bulk; // this is the new qty for all items that are the same product
-					updateCart = cartItems.map(item =>
-						item.name === payload.name
-							? {
-									...item,
-									cart: payload.cart + 1, // now it will show this was added to the cart
-									quantity: qty, // newly updated quantity, still need to update the rest
-							  }
-							: item.name.replace(/x[1-9]/, '') === payload.name.replace(/x[1-9]/, '')
-							? {
-									...item,
-									quantity: qty, // newly updated quantity for the all items that are the same product
-							  }
-							: item
-					);
-				} else {
-					updateCart = cartItems;
-				}
-				updateCart = updateCart.filter(item => item.cart > 0); // if adding to cart would surpass the quantity, remove from cart
-				debugger;
-				break;
-			case 'DECREASE':
-				qty += payload.bulk;
-				updateCart = cartItems.map(item =>
-					item.name === payload.name && item.cart > 0
-						? {
-								...item,
-								cart: payload.cart - 1,
-								quantity: qty,
-						  }
-						: item
-				);
-				updateCart = updateCart.filter(item => item.cart <= 0); // if cart already reached 0, remove from cart
-				break;
-			default:
-				num = payload.quantity;
-				updateCart = cartItems;
-		}
-
-		// use the updated quantity of the target to update quanities of any matching products in cart
-		updateCart = updateCart.map(item =>
-			item.name.replace(/x[1-9]/) === payload.name.replace(/x[1-9]/)
-				? {
-						...item,
-						quantity: qty,
-				  }
-				: item
-		);
-
-		return updateCart;
+		return stk;
 	};
 
-	switch (action.type) {
-		case 'ADD_ITEM':
-			let cartItems = [...state.cartItems];
-			let categories = [];
-			let names = [];
-			let index = 0;
+	const getQty = (payload, cart) => {
+		if (!payload) return;
 
-			if (cartItems.length > 0) {
-				for (let i in state.cartItems) {
-					names.push(state.cartItems[i].name);
-					if (!categories.length > 0 || !categories.find(e => e === state.cartItems[i].category)) {
-						categories.push(state.cartItems[i].category);
-					}
-				}
+		let qty;
 
-				for (let i in names) {
-					if (action.payload.category === categories[i] && action.payload.name === names[i]) {
-						index = undefined; // disallow adding to cart
-						break; // exact match, already in cart
-					} else {
-						i++;
-						index = i; // same category, insert after
-					}
-				}
-
-				index && cartItems.splice(index, 0, { ...action.payload, id: index });
-			} else {
-				cartItems = [...state.cartItems, { ...action.payload, id: 0 }];
+		for (let i in cart) {
+			if (cart[i].subcategory === payload.subcategory) {
+				qty = cart[i].quantity;
+				break;
 			}
+		}
 
-			let addToCart = [...handleInventory(cartItems, action.payload, action.type)];
+		qty = typeof qty === 'undefined' ? payload.quantity - payload.bulk : qty - payload.bulk;
 
-			return {
-				...state,
-				cartItems: [...addToCart],
-				...sumItems([...addToCart]),
-			};
-		case 'VIEW_ITEM':
-			state.viewItem = { ...action.payload };
-			productStorage(action.payload);
-			return {
-				...state,
-				...sumItems(state.cartItems),
-				cartItems: [...state.cartItems],
-			};
-		case 'REMOVE_ITEM':
-			return {
-				...state,
-				...sumItems(state.cartItems.filter(item => item.name !== action.payload.name)),
-				cartItems: [...state.cartItems.filter(item => item.name !== action.payload.name)],
-			};
+		return qty;
+	};
+
+	const syncQty = (subcategory, cart, qty) =>
+		cart.length > 1
+			? [
+					...cart.map(
+						item =>
+							item.subcategory === subcategory // if similiar match?
+								? { ...item, quantity: qty } // then update qty only
+								: { ...item } // else no match, no change
+					),
+			  ]
+			: [...cart];
+
+	const updateItem = (name, cart, stk, qty) => [
+		...cart.map(item =>
+			item.name === name // if exact match?
+				? { ...item, cart: stk, quantity: qty } // then update cart & qty
+				: { ...item }
+		),
+	];
+
+	let updatedCart = [];
+	const cartItems = [...state.cartItems];
+	const index = cartItems.findIndex(item => item.name === action.payload.name); // search to see if item is in cart
+	const stk = getStk(action.payload, cartItems);
+	const qty = getQty(action.payload, cartItems);
+
+	// WIP new switch case
+	switch (action.type) {
 		case 'INCREASE':
-		case 'DECREASE':
-			let moreOrLess = [...handleInventory(state.cartItems, action.payload, action.type)];
+		case 'ADD_ITEM':
+			if (qty >= 0) {
+				// if adding to cart does not create an issue with inventory
+				if (index === -1) {
+					// if item was not found
+					updatedCart = cartItems;
+					updatedCart.push({ ...action.payload, id: cartItems.length, cart: stk, quantity: qty });
+					updatedCart = syncQty(action.payload.subcategory, updatedCart, qty);
+				} else {
+					// if item was found
+					updatedCart = updateItem(action.payload.name, cartItems, stk, qty);
+					updatedCart = syncQty(action.payload.subcategory, updatedCart, qty);
+				}
+			} else {
+				// if adding to cart does create an issue with inventory
+				updatedCart = cartItems; // cartItems was not updated
+				console.info('item could not be added, quantity has been reached: ' + qty);
+			}
 			return {
 				...state,
-				cartItems: [...moreOrLess],
-				...sumItems([...moreOrLess]),
+				cartItems: [...updatedCart],
+				...sumItems([...updatedCart]),
+			};
+		case 'DECREASE':
+			const putBack = qty + action.payload.bulk;
+			updatedCart = [
+				...cartItems.map(item =>
+					item.name === action.payload.name && item.cart > 0
+						? {
+								...item,
+								cart: item.cart - 1,
+								quantity: putBack,
+						  }
+						: item
+				),
+			];
+			updatedCart = updatedCart.filter(item => item.cart <= 0); // if cart already 0, remove from cart
+			updatedCart = syncQty(action.payload.subcategory, updatedCart, putBack);
+			return {
+				...state,
+				cartItems: [...updatedCart],
+				...sumItems([...updatedCart]),
 			};
 		case 'CHECKOUT':
 			return {
@@ -169,12 +131,18 @@ export const CartReducer = (state, action) => {
 				cartItems: [...state.cartItems],
 				checkout: false,
 			};
+		case 'REMOVE_ITEM':
+			return {
+				...state,
+				...sumItems(state.cartItems.filter(item => item.name !== action.payload.name)),
+				cartItems: [...state.cartItems.filter(item => item.name !== action.payload.name)],
+			};
 		case 'CLEAR':
 			return {
 				cartItems: [],
 				...sumItems([]),
 			};
 		default:
-			return state;
+			console.error('invalid action: ', action);
 	}
 };
