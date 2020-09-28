@@ -111,7 +111,7 @@ export const CartReducer = (state, action) => {
 						: item
 				),
 			];
-			updatedCart = updatedCart.filter(item => item.cart <= 0); // if cart already 0, remove from cart
+			updatedCart = [...updatedCart.filter(item => item.cart > 0)];
 			updatedCart = syncQty(action.payload.subcategory, updatedCart, putBack);
 			return {
 				...state,
