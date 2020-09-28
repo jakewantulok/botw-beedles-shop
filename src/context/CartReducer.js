@@ -68,9 +68,9 @@ export const CartReducer = (state, action) => {
 
 	let updatedCart = [];
 	const cartItems = [...state.cartItems];
-	const index = cartItems.findIndex(item => item.name === action.payload.name); // search to see if item is in cart
-	const stk = getStk(action.payload, cartItems);
-	const qty = getQty(action.payload, cartItems);
+	const index = action.payload && cartItems.findIndex(item => item.name === action.payload.name); // search to see if item is in cart
+	const stk = action.payload && getStk(action.payload, cartItems);
+	const qty = action.payload && getQty(action.payload, cartItems);
 
 	// WIP new switch case
 	switch (action.type) {
