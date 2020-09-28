@@ -14,6 +14,12 @@ export const sumItems = cartItems => {
 };
 
 export const CartReducer = (state, action) => {
+	/**
+	 * @description get the stock of a cart item matching payload + 1
+	 * @param {object} payload item that is currently being added to cart
+	 * @param {array} cart all of the items (objects) already in cart
+	 * @returns number, item's stock + 1
+	 */
 	const getStk = (payload, cart) => {
 		let stk;
 
@@ -29,6 +35,12 @@ export const CartReducer = (state, action) => {
 		return stk;
 	};
 
+	/**
+	 * @description get the quantity of a cart item matching payload + item's bulk
+	 * @param {object} payload item that is currently being added to cart
+	 * @param {array} cart all of the items (objects) already in cart
+	 * @returns number, item's quantity + item's bulk
+	 */
 	const getQty = (payload, cart) => {
 		if (!payload) return;
 
@@ -46,6 +58,29 @@ export const CartReducer = (state, action) => {
 		return qty;
 	};
 
+	/**
+	 * @description sync all items that share the same subcategory so quantity matches
+	 * @param {object} subcategory payload's subcategoy to update any matches in cart
+	 * @param {array} cart all of the items (objects) already in cart
+	 * @param {number} stk item's stock + 1
+	 * @param {number} qty item's quantity + item's bulk
+	 * @returns array, updated cartItems array of objects
+	 */
+	const updateItem = (name, cart, stk, qty) => [
+		...cart.map(item =>
+			item.name === name // if exact match?
+				? { ...item, cart: stk, quantity: qty } // then update cart & qty
+				: { ...item }
+		),
+	];
+
+	/**
+	 * @description sync all items that share the same subcategory so quantity matches
+	 * @param {object} subcategory payload's subcategoy to update any matches in cart
+	 * @param {array} cart all of the items (objects) already in cart
+	 * @param {number} qty item's quantity + item's bulk
+	 * @returns array, updated cartItems array of objects
+	 */
 	const syncQty = (subcategory, cart, qty) =>
 		cart.length > 1
 			? [
@@ -58,14 +93,6 @@ export const CartReducer = (state, action) => {
 			  ]
 			: [...cart];
 
-	const updateItem = (name, cart, stk, qty) => [
-		...cart.map(item =>
-			item.name === name // if exact match?
-				? { ...item, cart: stk, quantity: qty } // then update cart & qty
-				: { ...item }
-		),
-	];
-
 	let updatedCart = [];
 	const cartItems = [...state.cartItems];
 	const index = action.payload && cartItems.findIndex(item => item.name === action.payload.name); // search to see if item is in cart
@@ -76,7 +103,7 @@ export const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'INCREASE':
 		case 'ADD_ITEM':
-			if (qty >= 0) {
+			if (qty >= 0 && action.payload) {
 				// if adding to cart does not create an issue with inventory
 				if (index === -1) {
 					// if item was not found
