@@ -4,6 +4,7 @@ export const productData = [
 		name: 'Arrow',
 		category: 'Arrows',
 		subcategory: 'Arrows',
+		pathname: 'arrow',
 		photo: 'arrow.png',
 		description: 'A common arrow. Its shaft was carved from the wood of a sturdy tree',
 		quantity: 210,
@@ -36,6 +37,7 @@ export const productData = [
 		name: 'Fire Arrow',
 		category: 'Arrows',
 		subcategory: 'Fire Arrows',
+		pathname: 'fire-arrow',
 		photo: 'fire_arrow.png',
 		description: 'Imbues your arrows with a fire effect, at the cost of stamina.',
 		quantity: 123,
@@ -68,6 +70,7 @@ export const productData = [
 		name: 'Ice Arrow',
 		category: 'Arrows',
 		subcategory: 'Ice Arrows',
+		pathname: 'ice-arrow',
 		photo: 'ice_arrow.png',
 		description: 'Imbues your arrows with an ice effect, at the cost of stamina.',
 		quantity: 144,
@@ -100,6 +103,7 @@ export const productData = [
 		name: 'Shock Arrow',
 		category: 'Arrows',
 		subcategory: 'Shock Arrows',
+		pathname: 'shock-arrow',
 		photo: 'shock_arrow.png',
 		description: "A Korok once told me, 'If you use a shock arrow when it's raining, it does extra damage.'",
 		quantity: 45,
@@ -132,6 +136,7 @@ export const productData = [
 		name: 'Bomb Arrow',
 		category: 'Arrows',
 		subcategory: 'Bomb Arrows',
+		pathname: 'bomb-arrow',
 		photo: 'bomb_arrow.png',
 		description:
 			'Exploding arrows can take out a lot of enemies in a single shot. Be careful — you might accidentally hit a target that you don’t want to.',
@@ -165,6 +170,7 @@ export const productData = [
 		name: 'Ancient Arrow',
 		category: 'Arrows',
 		subcategory: 'Ancient Arrows',
+		pathname: 'ancient-arrow',
 		photo: 'ancient_arrow.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -193,6 +199,7 @@ export const productData = [
 		name: 'Octo Balloon',
 		category: 'Monster Parts',
 		subcategory: 'Octo Balloons',
+		pathname: 'octo-balloon',
 		photo: 'octo_balloon.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -211,6 +218,7 @@ export const productData = [
 		name: 'Cold Darner',
 		category: 'Darners',
 		subcategory: 'Cold Darners',
+		pathname: 'cold-darner',
 		photo: 'cold_darner.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -229,6 +237,7 @@ export const productData = [
 		name: 'Warm Darner',
 		category: 'Darners',
 		subcategory: 'Warm Darners',
+		pathname: 'warm-darner',
 		photo: 'warm_darner.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -247,6 +256,7 @@ export const productData = [
 		name: 'Electric Darner',
 		category: 'Darners',
 		subcategory: 'Electric Darners',
+		pathname: 'electric-darner',
 		photo: 'electric_darner.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -265,6 +275,7 @@ export const productData = [
 		name: 'Hearty Lizard',
 		category: 'Lizards',
 		subcategory: 'Hearty Lizards',
+		pathname: 'hearty-lizard',
 		photo: 'hearty_lizard.png',
 		description:
 			'This rare lizard lives deep in the forests. It feeds on high-nutrient foods, giving it great vitality. When used to make elixirs, they temporarily increase your maximum hearts.',
