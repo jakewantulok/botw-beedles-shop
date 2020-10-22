@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ATC from './ATC';
 import QtyMsg from './QtyMsg';
@@ -180,6 +181,7 @@ class ProductItem extends Component {
 							</Btn>
 						)}
 						<QtyMsg item={this.state} />
+						<Link to={'/product/' + product.pathname}>Details</Link>
 					</div>
 				</div>
 			</Product>

@@ -8,7 +8,7 @@ import ProductsContextProvider from './context/ProductContext';
 import CartContextProvider from './context/CartContext';
 
 import Navigation from './components/Navigation';
-import { Routes } from './Routes';
+import { Router } from './Routes/Router';
 
 const App = () => {
 	const [mode, setMode] = useState('light');
@@ -21,7 +21,7 @@ const App = () => {
 			<ProductsContextProvider>
 				<CartContextProvider>
 					<Navigation themeHandler={handleThemeChange} theme={!toggleTheme ? 'light' : 'dark'} />
-					<Routes />
+					<Router />
 				</CartContextProvider>
 			</ProductsContextProvider>
 		</ThemeProvider>
