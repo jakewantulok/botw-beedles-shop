@@ -4,7 +4,7 @@ import { CartContext } from '../context/CartContext';
 import { InCart } from './InCart';
 
 const Btn = styled.button`
-	margin: 10px 10px 10px 0;
+	margin: 10px 10px 15px 0;
 `;
 
 const ATC = props => {
