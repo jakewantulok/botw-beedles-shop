@@ -41,24 +41,31 @@ const Desc = styled.div`
 `;
 
 const Options = props => {
-	const { thisState, prod, select } = props;
+	const { productState, productInfo: product, select } = props;
 
-	const optionBtns = prod.sale.map((option, i) => (
+	const optionBtns = product.sale.map((option, i) => (
 		<Option
 			key={i}
 			className={
 				option.name
-					? thisState.name === prod.name + ' ' + option.name
+					? productState.name === product.name + ' ' + option.name
 						? 'btn btn-sm btn-dark'
 						: 'btn btn-sm btn-light'
 					: 'btn btn-sm'
 			}
-			onClick={() => select(option)}>
+			onClick={() =>
+				select({
+					...productState,
+					name: product.name + ' ' + option.name,
+					price: option.price,
+					bulk: option.bulk,
+				})
+			}>
 			<span>{option.name}</span>
 		</Option>
 	));
 
-	return prod.sale.length > 1 ? (
+	return product.sale.length > 1 ? (
 		<OptionWrapper>{optionBtns}</OptionWrapper>
 	) : (
 		<>
@@ -66,7 +73,7 @@ const Options = props => {
 				<span>Description: </span>
 			</DescTitle>
 			<Desc>
-				<span>{prod.description}</span>
+				<span>{product.description}</span>
 			</Desc>
 		</>
 	);

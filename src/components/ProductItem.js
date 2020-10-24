@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 import { discount } from '../functions/discount';
 
@@ -53,66 +53,48 @@ const Price = styled.span`
 	padding-right: 10px;
 `;
 
-class ProductItem extends Component {
-	constructor(props) {
-		super();
-		this.state = {
-			name: props.product.name + ' ' + props.product.sale[0].name,
-			category: props.product.category,
-			subcategory: props.product.subcategory,
-			photo: props.product.photo,
-			description: props.product.description,
-			originalPrice: props.product.sale[0].price,
-			price: props.product.sale[0].price,
-			quantity: props.product.quantity,
-			bulk: props.product.sale[0].bulk,
-			cart: 0,
-		};
-	}
+const ProductItem = ({ product }) => {
+	const initialState = {
+		name: product.name + ' ' + product.sale[0].name,
+		category: product.category,
+		subcategory: product.subcategory,
+		photo: product.photo,
+		description: product.description,
+		originalPrice: product.price,
+		price: product.sale[0].price,
+		quantity: product.quantity,
+		bulk: product.sale[0].bulk,
+		cart: 0,
+	};
 
-	render() {
-		const { product } = this.props;
+	const [optionSelected, selectOption] = useState(initialState);
 
-		const selectOption = option => {
-			this.setState(prevState => ({
-				...prevState,
-				name: product.name + ' ' + option.name,
-				category: product.category,
-				photo: product.photo,
-				description: product.description,
-				price: option.price,
-				bulk: option.bulk,
-				cart: prevState.cart,
-			}));
-		};
+	return (
+		<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-6 col-lg-4">
+			<div>
+				<ProductHeader>
+					<ProductImg>
+						<img src={'./img/products/' + product.photo} alt={product.name} />
+					</ProductImg>
+					<ProductTitle>
+						<h5>{optionSelected.name}</h5>
+					</ProductTitle>
+				</ProductHeader>
 
-		return (
-			<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-6 col-lg-4">
-				<div>
-					<ProductHeader>
-						<ProductImg>
-							<img src={'./img/products/' + product.photo} alt={product.name} />
-						</ProductImg>
-						<ProductTitle>
-							<h5>{this.state.name}</h5>
-						</ProductTitle>
-					</ProductHeader>
+				<Sale>
+					<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
+					<Price>{optionSelected.price}</Price>
+					<span hidden={discount(optionSelected, product.price) <= 0} className="text-info font-italic">
+						{discount(optionSelected, product.price)}% Off!
+					</span>
+				</Sale>
 
-					<Sale>
-						<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
-						<Price>{this.state.price}</Price>
-						<span hidden={discount(this.state, product.price) <= 0} className="text-info font-italic">
-							{discount(this.state, product.price)}% Off!
-						</span>
-					</Sale>
+				<Options productState={optionSelected} productInfo={product} select={selectOption} />
 
-					<Options thisState={this.state} prod={product} select={selectOption} />
-
-					<SafeATC item={this.state} />
-				</div>
-			</Product>
-		);
-	}
-}
+				<SafeATC item={optionSelected} />
+			</div>
+		</Product>
+	);
+};
 
 export default ProductItem;
