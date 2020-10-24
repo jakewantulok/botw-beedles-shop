@@ -1,22 +1,22 @@
 import React, { useContext, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
 import { ProductContext } from '../context/ProductContext';
-import { CloseIcon } from './Icons';
 
 const Products = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	border: 1px solid white;
 	background: rgba(22, 22, 29, 50%);
 	border-radius: 15px;
-	padding: 15px;
+	padding: 15px 15px 0 15px;
 	box-shadow: 5px 5px 10px #16161d50;
 `;
 
 const Filter = styled.div`
 	position: fixed;
+	border: 1px solid white;
 	background: rgba(22, 22, 29, 50%);
 	border-radius: 15px;
 	padding: 15px;
@@ -34,6 +34,16 @@ const FilterOptions = styled.div`
 	& button {
 		margin: 15px 0 0;
 	}
+`;
+
+const ClearBtn = styled.button`
+	font-size: 1rem;
+	margin-left: 10px;
+	color: white;
+	background: none;
+	border: none;
+	font-style: italic;
+	text-decoration: underline;
 `;
 
 const ProductGrid = () => {
@@ -66,8 +76,20 @@ const ProductGrid = () => {
 
 	return (
 		<>
+			<div className="mt-5">
+				<h1>
+					{filter}
+					<ClearBtn hidden={filter === 'All'} onClick={() => handleFilter('All')}>
+						clear
+					</ClearBtn>
+				</h1>
+			</div>
 			<div className="row">
-				<div className="col-0 col-sm-0 col-md-2">
+				<div className="col-12 col-sm-12 col-md-12 col-lg-9">
+					<Products>{renderProducts}</Products>
+				</div>
+				<div className="col-0 col-sm-0 col-md-0 col-lg-1" />
+				<div className="col-0 col-sm-0 col-md-0 col-lg-2">
 					<Filter>
 						<Dropdown hidden>
 							<Dropdown.Toggle variant="primary" id="dropdown-basic">
@@ -92,10 +114,6 @@ const ProductGrid = () => {
 							{filterBtns}
 						</FilterOptions>
 					</Filter>
-				</div>
-				{/* <div className="col-0 col-sm-0 col-md-1" /> */}
-				<div className="col-12 col-sm-12 col-md-10">
-					<Products>{renderProducts}</Products>
 				</div>
 			</div>
 		</>

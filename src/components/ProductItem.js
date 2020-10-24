@@ -1,24 +1,27 @@
-import React, { Component, useState } from 'react';
-
+import React, { useState } from 'react';
 import { discount } from '../functions/discount';
-
+import { RupeeIcon } from './Icons';
 import Options from './Options';
 import SafeATC from './SafeATC';
-
 import styled from 'styled-components';
 
+const ProductWrapper = styled.div`
+	padding: 0;
+`;
+
 const Product = styled.div`
-	& > div {
-		margin: 15px 0px;
-		padding: 15px;
-		border-radius: 15px;
-		transition: background-color 0.5s;
-		transition: border 0.5s;
-		&:hover {
-			background-color: rgba(22, 22, 29, 50%);
-			transition: background-color 0.25s;
-			transition: border 0.25s;
-		}
+	height: calc(100% - 15px);
+	padding: 15px;
+	border-radius: 15px;
+	margin-right: 15px;
+	border: 1px solid transparent;
+	transition: background-color 0.5s;
+	transition: border 0.5s;
+	&:hover {
+		border: 1px solid white;
+		background-color: rgba(22, 22, 29, 50%);
+		transition: background-color 0.25s;
+		transition: border 0.25s;
 	}
 `;
 
@@ -26,10 +29,6 @@ const ProductHeader = styled.div`
 	display: flex;
 	flex-flow: wrap;
 	align-items: center;
-`;
-
-const ProductTitle = styled.div`
-	max-width: 150px;
 `;
 
 const ProductImg = styled.div`
@@ -45,8 +44,9 @@ const ProductImg = styled.div`
 	}
 `;
 
-const Sale = styled.div`
-	margin-bottom: 10px;
+const ProductTitle = styled.div`
+	max-width: 150px;
+	margin-bottom: 15px;
 `;
 
 const Price = styled.span`
@@ -70,30 +70,40 @@ const ProductItem = ({ product }) => {
 	const [optionSelected, selectOption] = useState(initialState);
 
 	return (
-		<Product key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-6 col-lg-4">
-			<div>
+		<ProductWrapper key={product.id} hidden={!product.price} className="col-12 col-sm-6 col-md-6 col-lg-4">
+			<Product>
 				<ProductHeader>
 					<ProductImg>
 						<img src={'./img/products/' + product.photo} alt={product.name} />
 					</ProductImg>
+
 					<ProductTitle>
 						<h5>{optionSelected.name}</h5>
+
+						<Price>
+							<RupeeIcon />
+							{optionSelected.price}
+						</Price>
+
+						<span hidden={discount(optionSelected, product.price) <= 0} className="text-info font-italic">
+							{discount(optionSelected, product.price)}% Off!
+						</span>
 					</ProductTitle>
 				</ProductHeader>
 
-				<Sale>
-					<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={20} />
-					<Price>{optionSelected.price}</Price>
-					<span hidden={discount(optionSelected, product.price) <= 0} className="text-info font-italic">
-						{discount(optionSelected, product.price)}% Off!
-					</span>
-				</Sale>
-
-				<Options productState={optionSelected} productInfo={product} select={selectOption} />
-
-				<SafeATC item={optionSelected} />
-			</div>
-		</Product>
+				{product.sale.length > 1 ? (
+					<>
+						<Options productState={optionSelected} productInfo={product} select={selectOption} />
+						<SafeATC item={optionSelected} />
+					</>
+				) : (
+					<>
+						<SafeATC item={optionSelected} />
+						<Options productState={optionSelected} productInfo={product} select={selectOption} />
+					</>
+				)}
+			</Product>
+		</ProductWrapper>
 	);
 };
 
