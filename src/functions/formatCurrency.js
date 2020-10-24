@@ -1,4 +1,4 @@
-const FormatCurrency = (num, type) => {
+export const formatCurrency = (num, type) => {
 	type = type ? type : 'en-US';
 
 	const tender = type => {
@@ -19,5 +19,3 @@ const FormatCurrency = (num, type) => {
 
 	return new Intl.NumberFormat(type, currencyConfig).format(num);
 };
-
-export default FormatCurrency;
