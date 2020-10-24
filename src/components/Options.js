@@ -16,30 +16,6 @@ const Option = styled.button`
 	font-size: 12px;
 `;
 
-const DescTitle = styled.div`
-	position: relative;
-	& span {
-		position: absolute;
-		top: -6px;
-		font-size: 12px;
-	}
-`;
-
-const Desc = styled.div`
-	position: relative;
-	top: 12px;
-	max-width: 200px;
-	height: 30px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	font-size: 12px;
-	font-style: italic;
-	& span:nth-child(2) {
-		line-height: 0;
-	}
-`;
-
 const Options = props => {
 	const { productState, productInfo: product, select } = props;
 
@@ -65,18 +41,7 @@ const Options = props => {
 		</Option>
 	));
 
-	return product.sale.length > 1 ? (
-		<OptionWrapper>{optionBtns}</OptionWrapper>
-	) : (
-		<>
-			<DescTitle>
-				<span>Description: </span>
-			</DescTitle>
-			<Desc>
-				<span>{product.description}</span>
-			</Desc>
-		</>
-	);
+	return <OptionWrapper>{optionBtns}</OptionWrapper>;
 };
 
 export default Options;
