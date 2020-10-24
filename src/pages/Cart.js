@@ -26,7 +26,7 @@ export const Cart = () => {
 
 	return (
 		<>
-			<div className="text-center mt-5">
+			<div className="mt-5">
 				<h1>Cart</h1>
 			</div>
 			<div className="row justify-content-center">

@@ -6,7 +6,8 @@ import CartItem from './CartItem';
 const repeatedStyles = {
 	card: `
 		padding: 15px;
-		background-color: rgba(22, 22, 29, 75%);
+		border: 1px solid white;
+		background-color: rgba(22, 22, 29, 50%);
 		border-radius: 15px;`,
 };
 

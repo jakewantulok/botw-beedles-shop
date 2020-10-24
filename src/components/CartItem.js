@@ -2,15 +2,15 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
-import FormatCurrency from './FormatCurrency';
 
 const Item = styled.div`
 	margin: 15px 0;
 	padding: 15px;
+	border: 1px solid white;
 	border-radius: 15px;
 	transition: background-color 0.5s;
 	transition: border 0.5s;
-	background-color: rgba(22, 22, 29, 75%);
+	background-color: rgba(22, 22, 29, 50%);
 	}
 `;
 
@@ -51,12 +51,12 @@ const CartItem = ({ product }) => {
 			<div className="col-sm-3 p-2">
 				<p className="mb-1">
 					<span className="text-success" hidden={product.sale === product.price}>
-						{typeof product.sale === 'number' && FormatCurrency(product.sale)}
+						{typeof product.sale === 'number' && product.sale}
 					</span>
 					<span
 						style={{ textDecoration: product.sale < product.price && 'line-through' }}
 						className={product.sale < product.price ? 'text-muted' : ''}>
-						{FormatCurrency(product.price)}
+						{product.price}
 					</span>
 				</p>
 			</div>
