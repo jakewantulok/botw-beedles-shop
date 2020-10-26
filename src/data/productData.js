@@ -294,6 +294,7 @@ export const productData = [
 		name: 'Fireproof Lizard',
 		category: 'Lizards',
 		subcategory: 'Fireproof Lizards',
+		pathname: 'fireproof-lizard',
 		photo: 'fireproof_lizard.png',
 		description:
 			'This rare lizard can only be found in the Eldin region. Its scales have heat-resistant properties, so when cooked with monster parts, it produces a heat-resistance elixir.',
@@ -312,6 +313,7 @@ export const productData = [
 		name: 'Hightail Lizard',
 		category: 'Lizards',
 		subcategory: 'Hightail Lizards',
+		pathname: 'hightail-lizard',
 		photo: 'hightail_lizard.png',
 		description:
 			"A lizard found throughout Hyrule. It's a bit slow to react at times, but if given a chance to escape, it will dart off quickly. Cook it with monster parts for a speed-boosting elixir.",
@@ -330,6 +332,7 @@ export const productData = [
 		name: 'Hot-footed Frog',
 		category: 'Frogs',
 		subcategory: 'Hotfooted Frogs',
+		pathname: 'hotfooted-frog',
 		photo: 'hot-footed_frog.png',
 		description:
 			'A quick frog that can be found hopping around near water. Cook it with monster parts to draw out its speed-boost effect.',
@@ -348,6 +351,7 @@ export const productData = [
 		name: 'Tireless Frog',
 		category: 'Frogs',
 		subcategory: 'Tireless Frogs',
+		pathname: 'tireless-frog',
 		photo: 'tireless_frog.png',
 		description:
 			'This rare frog only ventures out in the rain. When cooked with monster parts, the elixir it produces will temporarily increase your maximum stamina.',
@@ -366,6 +370,7 @@ export const productData = [
 		name: 'Restless Cricket',
 		category: 'Crickets',
 		subcategory: 'Restless Crickets',
+		pathname: 'restless-crickets',
 		photo: 'restless_cricket.png',
 		description: 'A very energetic cricket. Cook it with monster parts to create a stamina-recovery elixir.',
 		quantity: 25,
@@ -383,6 +388,7 @@ export const productData = [
 		name: 'Smotherwing Butterfly',
 		category: 'Butterflies',
 		subcategory: 'Smotherwing Butterflies',
+		pathname: 'smotherwing-butterfly',
 		photo: 'smotherwing_butterfly.png',
 		description:
 			'This rare butterfly lives in volcanic regions. Its body contains a heat-resistant liquid, which can be turned into a topical elixir that offers resistance to flames.',
@@ -401,6 +407,7 @@ export const productData = [
 		name: 'Summerwing Butterfly',
 		category: 'Butterflies',
 		subcategory: 'Summerwing Butterflies',
+		pathname: 'summerwing-butterfly',
 		photo: 'summerwing_butterfly.png',
 		description:
 			'Daggers created using ancient technology have been repurposed for use as arrows. Extremely effective against Guardians.',
@@ -419,6 +426,7 @@ export const productData = [
 		name: 'Thunderwing Butterfly',
 		category: 'Butterflies',
 		subcategory: 'Thunderwing Butterflies',
+		pathname: 'thunderwing-butterfly.png',
 		photo: 'thunderwing_butterfly.png',
 		description:
 			'This rare butterfly only shows itself when it rains. The organs in its body produce an insulating compound. When made into an elixir, it offers electrical resistance.',
@@ -437,6 +445,7 @@ export const productData = [
 		name: 'Winterwing Butterfly',
 		category: 'Butterflies',
 		subcategory: 'Winterwing Butterflies',
+		pathname: 'winterwing-butterfly',
 		photo: 'winterwing_butterfly.png',
 		description:
 			"The powdery scales of this butterfly's wings cool the air around it. Watching it flutter around snowflakes is a thing of beauty. Cook it with monster parts for a heat-resistant elixir.",
@@ -455,6 +464,7 @@ export const productData = [
 		name: 'Sunset Firefly',
 		category: 'Fireflies',
 		subcategory: 'Sunset Butterflies',
+		pathname: 'sunset-firefly',
 		photo: 'sunset_firefly.png',
 		description:
 			'These fireflies glow gently in the dark. When cooked with monster parts, the compound that causes it to glow results in an elixir that will allow you to move more quietly.',
@@ -473,6 +483,7 @@ export const productData = [
 		name: 'Hearty Radish',
 		category: 'Ingredients',
 		subcategory: 'Hearty Radishes',
+		pathname: 'hearty-radish',
 		photo: 'hearty_radish.png',
 		description:
 			'A rare radish that grows best in sunny plains. Cook it before eating to temporarily increase your maximum health.',
@@ -491,6 +502,7 @@ export const productData = [
 		name: 'Swift Carrot',
 		category: 'Ingredients',
 		subcategory: 'Swift Carrots',
+		pathname: 'swift-carrot',
 		photo: 'swift_carrot.png',
 		description:
 			'This carrot is cultivated extensively in Kakariko Village. It strengthens the legs and hips when cooked into a dish, which helps increase your movement speed.',
