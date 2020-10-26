@@ -7,7 +7,8 @@ import BeedleBanner from './BeedleBanner';
 // #245e79
 
 const Navigation = props => {
-	const { itemCount } = useContext(CartContext);
+	const { sumItems } = useContext(CartContext);
+	const { cartCount } = sumItems;
 	const { siteTitle } = storeConfig;
 	const { themeHandler, theme } = props;
 
@@ -26,7 +27,7 @@ const Navigation = props => {
 						<Nav.Link href="/">Home</Nav.Link>
 						<Nav.Link href="/cart">
 							<CartIcon width={20} />
-							Cart ({itemCount})
+							Cart ({cartCount})
 						</Nav.Link>
 						<button onClick={() => themeHandler()} />
 						{/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
-import { InCart } from './InCart';
+import { inCart } from '../functions/inCart';
 
 const Btn = styled.button`
 	margin: 10px 10px 15px 0;
@@ -17,7 +17,7 @@ const ATC = props => {
 	};
 
 	const addMore = () => {
-		let cart = InCart(item, cartItems, 'cart');
+		let cart = inCart(item, cartItems, 'cart');
 		cart === 0 && addProduct(item);
 		cart !== item.quantity && increase(item);
 	};
@@ -30,20 +30,20 @@ const ATC = props => {
 
 	const addMoreBtn = (
 		<Btn
-			disabled={InCart(item, cartItems) && InCart(item, cartItems, 'cart') === item.quantity}
+			disabled={inCart(item, cartItems) && inCart(item, cartItems, 'cart') === item.quantity}
 			onClick={() => addMore()}
 			className="btn btn-success add-more-btn">
 			Add More
 		</Btn>
 	);
 	const soldOutBtn = (
-		<Btn disabled={true} className="btn btn-muted">
+		<Btn disabled={true} className="btn btn-danger">
 			SOLD OUT
 		</Btn>
 	);
 
-	return InCart(item, cartItems) ? (
-		<>{InCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</>
+	return inCart(item, cartItems) ? (
+		<>{inCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</>
 	) : (
 		atcBtn
 	);

@@ -1,22 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../context/CartContext';
-import { InCart } from './InCart';
+//import { inCart } from '../functions/inCart';
 
-const QtyMsg = props => {
-	const { cartItems } = useContext(CartContext);
-	const { item } = props;
+const QtyMsg = ({ item }) => {
+	const { sumItems } = useContext(CartContext);
+	const { subcategories } = sumItems;
+
+	const filtered = subcategories.filter(cartItem => cartItem.subcategory === item.subcategory);
+	let itemCount = 0;
+
+	if (filtered.length > 0) itemCount = filtered[0].itemCount;
 	return (
-		<span
-			hidden={
-				(InCart(item, cartItems) &&
-					item.quantity - InCart(item, cartItems, 'cart') <= 15 &&
-					item.quantity - InCart(item, cartItems, 'cart') > 0) ||
-				(item.quantity > 0 && item.quantity <= 15)
-					? false
-					: true
-			}
-			className="sizeQty text-light font-italic">
-			{InCart(item, cartItems) ? item.quantity - InCart(item, cartItems, 'cart') : item.quantity} LEFT!
+		<span className="sizeQty text-info font-italic">
+			{item.quantity - itemCount} LEFT! {}
 		</span>
 	);
 };

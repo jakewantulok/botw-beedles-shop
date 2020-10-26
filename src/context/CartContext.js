@@ -10,7 +10,7 @@ const productStorage = localStorage.getItem('product') ? JSON.parse(localStorage
 const initialState = {
 	cartItems: storage,
 	viewItem: productStorage,
-	...sumItems(storage),
+	sumItems: { ...sumItems(storage) },
 	checkout: false,
 };
 
@@ -27,8 +27,6 @@ const CartContextProvider = ({ children }) => {
 
 	const removeProduct = payload => dispatch({ type: 'REMOVE_ITEM', payload });
 
-	// const setQuantity = (payload, qty) => dispatch({ type: 'SET_QUANTITY', qty: qty, payload });
-
 	const clearCart = () => dispatch({ type: 'CLEAR' });
 
 	const resetCheckout = () => dispatch({ type: 'RESET' });
@@ -36,7 +34,6 @@ const CartContextProvider = ({ children }) => {
 	const handleCheckout = () => dispatch({ type: 'CHECKOUT' });
 
 	const contextValues = {
-		// setQuantity,
 		removeProduct,
 		addProduct,
 		viewProduct,
