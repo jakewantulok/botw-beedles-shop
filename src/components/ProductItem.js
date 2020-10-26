@@ -11,6 +11,7 @@ const ProductWrapper = styled.div`
 
 const Product = styled.div`
 	height: calc(100% - 15px);
+	min-height: 200px;
 	padding: 15px;
 	border-radius: 15px;
 	margin-right: 15px;
