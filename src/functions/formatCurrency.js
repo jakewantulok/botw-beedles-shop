@@ -1,6 +1,4 @@
-export const formatCurrency = (num, type) => {
-	type = type ? type : 'en-US';
-
+export const formatCurrency = (num = 0, type = 'en-US') => {
 	const tender = type => {
 		switch (type) {
 			case 'de-DE':
