@@ -1,16 +1,56 @@
-const productStorage = viewItem => localStorage.setItem('product', JSON.stringify(viewItem));
+// const productStorage = viewItem => localStorage.setItem('product', JSON.stringify(viewItem));
 
 export const sumItems = cartItems => {
-	const itemCount = cartItems.reduce((acc, { cart }) => acc + cart, 0);
-
-	const fullTotal = cartItems.reduce((acc, { price, cart }) => acc + price * cart, 0).toFixed(2);
-	const total = cartItems.reduce((acc, { sale, cart }) => acc + sale * cart, 0).toFixed(2);
-	const savings = fullTotal - total;
-	const savingsPercent = ((savings / fullTotal) * 100).toFixed(0);
-
 	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
 
-	return { itemCount, total, savings, savingsPercent };
+	let sumItems = {
+		cartCount: cartItems.length,
+		overallCost: 0,
+		overallReducedCost: 0,
+		overallSavings: 0,
+		overallSavingsPercent: 0,
+		subcategories: [],
+	};
+
+	const subcategories = [...new Set([...cartItems.map(product => product.subcategory)])];
+
+	for (let i in subcategories) {
+		sumItems.subcategories[i] = {
+			subcategory: subcategories[i],
+			itemCount: 0,
+			totalCost: 0,
+			reducedCost: 0,
+			savings: 0,
+			savingsPercent: 0,
+		};
+		const filteredItems = cartItems.filter(cartItem => cartItem.subcategory === subcategories[i]);
+		filteredItems.forEach(cartItem => {
+			const itemCount = cartItem.cart * cartItem.bulk;
+
+			sumItems.subcategories[i].itemCount += itemCount;
+
+			sumItems.subcategories[i].totalCost += itemCount * cartItem.originalPrice;
+			sumItems.overallCost += sumItems.subcategories[i].totalCost;
+
+			sumItems.subcategories[i].reducedCost += cartItem.cart * cartItem.price;
+			sumItems.overallReducedCost += sumItems.subcategories[i].reducedCost;
+		});
+
+		sumItems.subcategories[i].savings = sumItems.subcategories[i].totalCost - sumItems.subcategories[i].reducedCost;
+
+		sumItems.subcategories[i].savingsPercent = +(
+			(((sumItems.subcategories[i].savings * 100) / sumItems.subcategories[i].totalCost) * 100) /
+			100
+		).toFixed(0);
+	}
+
+	sumItems.overallSavings = sumItems.overallCost - sumItems.overallReducedCost;
+
+	sumItems.overallSavingsPercent = +((((sumItems.overallSavings * 100) / sumItems.overallCost) * 100) / 100).toFixed(0);
+
+	localStorage.setItem('sum', JSON.stringify(sumItems));
+
+	return sumItems;
 };
 
 export const CartReducer = (state, action) => {
@@ -95,25 +135,25 @@ export const CartReducer = (state, action) => {
 
 	let updatedCart = [];
 	const cartItems = [...state.cartItems];
-	const index = action.payload && cartItems.findIndex(item => item.name === action.payload.name); // search to see if item is in cart
-	const stk = action.payload && getStk(action.payload, cartItems);
-	const qty = action.payload && getQty(action.payload, cartItems);
+	const { type, payload } = action;
+	const index = payload && cartItems.findIndex(item => item.name === payload.name); // search to see if item is in cart
+	const stk = payload && getStk(payload, cartItems);
+	const qty = payload && getQty(payload, cartItems);
 
-	// WIP new switch case
-	switch (action.type) {
+	switch (type) {
 		case 'INCREASE':
 		case 'ADD_ITEM':
-			if (qty >= 0 && action.payload) {
+			if (qty >= 0 && payload) {
 				// if adding to cart does not create an issue with inventory
 				if (index === -1) {
 					// if item was not found
 					updatedCart = cartItems;
-					updatedCart.push({ ...action.payload, id: cartItems.length, cart: stk, quantity: qty });
-					updatedCart = syncQty(action.payload.subcategory, updatedCart, qty);
+					updatedCart.push({ ...payload, id: cartItems.length, cart: stk, quantity: qty });
+					updatedCart = syncQty(payload.subcategory, updatedCart, qty);
 				} else {
 					// if item was found
-					updatedCart = updateItem(action.payload.name, cartItems, stk, qty);
-					updatedCart = syncQty(action.payload.subcategory, updatedCart, qty);
+					updatedCart = updateItem(payload.name, cartItems, stk, qty);
+					updatedCart = syncQty(payload.subcategory, updatedCart, qty);
 				}
 			} else {
 				// if adding to cart does create an issue with inventory
@@ -126,10 +166,10 @@ export const CartReducer = (state, action) => {
 				...sumItems([...updatedCart]),
 			};
 		case 'DECREASE':
-			const putBack = qty + action.payload.bulk;
+			const putBack = qty + payload.bulk;
 			updatedCart = [
 				...cartItems.map(item =>
-					item.name === action.payload.name && item.cart > 0
+					item.name === payload.name && item.cart > 0
 						? {
 								...item,
 								cart: item.cart - 1,
@@ -139,7 +179,7 @@ export const CartReducer = (state, action) => {
 				),
 			];
 			updatedCart = [...updatedCart.filter(item => item.cart > 0)];
-			updatedCart = syncQty(action.payload.subcategory, updatedCart, putBack);
+			updatedCart = syncQty(payload.subcategory, updatedCart, putBack);
 			return {
 				...state,
 				cartItems: [...updatedCart],
@@ -161,8 +201,8 @@ export const CartReducer = (state, action) => {
 		case 'REMOVE_ITEM':
 			return {
 				...state,
-				...sumItems(state.cartItems.filter(item => item.name !== action.payload.name)),
-				cartItems: [...state.cartItems.filter(item => item.name !== action.payload.name)],
+				...sumItems(state.cartItems.filter(item => item.name !== payload.name)),
+				cartItems: [...state.cartItems.filter(item => item.name !== payload.name)],
 			};
 		case 'CLEAR':
 			return {
