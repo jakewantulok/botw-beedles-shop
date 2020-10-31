@@ -1,25 +1,23 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
-import { inCart } from '../functions/inCart';
+import styled from 'styled-components';
 
 const Btn = styled.button`
 	margin: 10px 10px 15px 0;
 `;
 
 const ATC = props => {
-	const { item } = props;
-	const { resetCheckout, checkout, addProduct, cartItems, increase } = useContext(CartContext);
+	const { item, inCart } = props;
+	const { resetCheckout, checkout, addProduct, increase } = useContext(CartContext);
+	let safeATC;
 
 	const resetChecker = () => {
 		addProduct(item);
 		checkout && resetCheckout();
 	};
-
 	const addMore = () => {
-		let cart = inCart(item, cartItems, 'cart');
-		cart === 0 && addProduct(item);
-		cart !== item.quantity && increase(item);
+		inCart === 0 && addProduct(item);
+		inCart !== item.quantity && increase(item);
 	};
 
 	const atcBtn = (
@@ -28,24 +26,46 @@ const ATC = props => {
 		</Btn>
 	);
 
-	const addMoreBtn = (
-		<Btn
-			disabled={inCart(item, cartItems) && inCart(item, cartItems, 'cart') === item.quantity}
-			onClick={() => addMore()}
-			className="btn btn-success add-more-btn">
-			Add More
-		</Btn>
-	);
 	const soldOutBtn = (
 		<Btn disabled={true} className="btn btn-danger">
 			SOLD OUT
 		</Btn>
 	);
 
-	return inCart(item, cartItems) ? (
-		<>{inCart(item, cartItems, 'cart') === item.quantity ? soldOutBtn : addMoreBtn}</>
-	) : (
-		atcBtn
+	const addMoreBtn =
+		inCart !== item.quantity ? (
+			<Btn disabled={inCart === item.quantity} onClick={() => addMore()} className="btn btn-success add-more-btn">
+				Add More
+			</Btn>
+		) : (
+			soldOutBtn
+		);
+
+	if (item.name) {
+		if (inCart === 0) {
+			safeATC = atcBtn;
+		} else {
+			if (item.quantity > item.quantity - inCart) {
+				safeATC = addMoreBtn;
+			} else {
+				safeATC = soldOutBtn;
+			}
+		}
+	} else {
+		safeATC = (
+			<Btn disabled={true} className="btn btn-dark">
+				SELECT AN OPTION
+			</Btn>
+		);
+	}
+
+	return (
+		<>
+			{safeATC}
+			<span hidden={item.quantity - inCart > 15} className="sizeQty text-warning font-italic">
+				{item.quantity - inCart} LEFT! {}
+			</span>
+		</>
 	);
 };
 

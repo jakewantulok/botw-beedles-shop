@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 import { discount } from '../functions/discount';
 import { RupeeIcon } from './Icons';
 import Options from './Options';
-import SafeATC from './SafeATC';
+import ATC from './ATC';
 import styled from 'styled-components';
 
 const ProductWrapper = styled.div`
@@ -55,6 +56,14 @@ const Price = styled.span`
 `;
 
 const ProductItem = ({ product }) => {
+	const { sumItems } = useContext(CartContext);
+	const { subcategories } = sumItems;
+	const filtered =
+		subcategories.length > 0 ? subcategories.filter(cartItem => cartItem.subcategory === product.subcategory) : [];
+	const count = filtered && filtered.length > 0 ? filtered[0].itemCount : 0;
+
+	if (product.name === 'Octo Balloon') console.log(subcategories, filtered, count);
+
 	const initialState = {
 		name: product.name + ' ' + product.sale[0].name,
 		category: product.category,
@@ -95,11 +104,11 @@ const ProductItem = ({ product }) => {
 				{product.sale.length > 1 ? (
 					<>
 						<Options productState={optionSelected} productInfo={product} select={selectOption} />
-						<SafeATC item={optionSelected} />
+						<ATC item={optionSelected} inCart={count} />
 					</>
 				) : (
 					<>
-						<SafeATC item={optionSelected} />
+						<ATC item={optionSelected} inCart={count} />
 						<Options productState={optionSelected} productInfo={product} select={selectOption} />
 					</>
 				)}
