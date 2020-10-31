@@ -66,3 +66,47 @@ export const CloseIcon = ({ size = 20, color = 'currentColor' }) => (
 export const RupeeIcon = ({ size = 20 }) => (
 	<img src="./img/green_rupee.png" className="rupee-icon" alt="rupee-icon" width={size} />
 );
+
+export const FilterIcon = ({ size = 20, color = 'currentColor' }) => (
+	<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width={size} height={size}>
+		<title>Options</title>
+		<path
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="32"
+			d="M368 128h80M64 128h240M368 384h80M64 384h240M208 256h240M64 256h80"
+		/>
+		<circle
+			cx="336"
+			cy="128"
+			r="32"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="32"
+		/>
+		<circle
+			cx="176"
+			cy="256"
+			r="32"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="32"
+		/>
+		<circle
+			cx="336"
+			cy="384"
+			r="32"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="32"
+		/>
+	</svg>
+);

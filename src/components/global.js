@@ -16,4 +16,9 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.text};
   }
 
+  .btn-filter {
+    color: white;
+    background-color: #6f42c1;
+  }
+
 `;

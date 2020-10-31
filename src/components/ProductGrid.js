@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
+import { FilterIcon } from './Icons';
 import { ProductContext } from '../context/ProductContext';
 
 const Products = styled.div`
@@ -61,7 +62,7 @@ const ProductGrid = () => {
 	const filterBtns = [...new Set(filtersArr)].map((option, i) => (
 		<button
 			key={i}
-			className={filter === option ? 'btn btn-primary' : 'btn btn-outline-light'}
+			className={filter === option ? 'btn btn-filter' : 'btn btn-outline-light'}
 			onClick={() => handleFilter(option)}>
 			{option}
 		</button>
@@ -102,12 +103,13 @@ const ProductGrid = () => {
 						</Dropdown>
 						<div className="text-center">
 							<span>
+								<FilterIcon size="15px" />{' '}
 								{renderProducts.length > 1 ? renderProducts.length + ' Products' : renderProducts.length + ' Product'}
 							</span>
 						</div>
 						<FilterOptions>
 							<button
-								className={filter === 'All' ? 'btn btn-primary' : 'btn btn-outline-light'}
+								className={filter === 'All' ? 'btn btn-filter' : 'btn btn-outline-light'}
 								onClick={() => handleFilter('All')}>
 								All
 							</button>
