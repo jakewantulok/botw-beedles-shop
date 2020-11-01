@@ -60,9 +60,8 @@ const ProductItem = ({ product }) => {
 	const { subcategories } = sumItems;
 	const filtered =
 		subcategories.length > 0 ? subcategories.filter(cartItem => cartItem.subcategory === product.subcategory) : [];
-	const count = filtered && filtered.length > 0 ? filtered[0].itemCount : 0;
 
-	if (product.name === 'Octo Balloon') console.log(subcategories, filtered, count);
+	const count = filtered && filtered.length > 0 ? filtered[0].itemCount : 0;
 
 	const initialState = {
 		name: product.name + ' ' + product.sale[0].name,
