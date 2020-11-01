@@ -11,6 +11,18 @@ const ATC = props => {
 	const { resetCheckout, checkout, addProduct, increase } = useContext(CartContext);
 	let safeATC;
 
+	// this is a way to check ahead if optionSelected can in fact be added to cart
+	const testObj = {
+		itemName: item.name,
+		itemQuantity: item.quantity,
+		itemBulk: item.bulk,
+		inCart: inCart,
+		expression: 'item.quantity - (inCart + item.bulk) ',
+		result: item.quantity - (inCart + item.bulk),
+	};
+
+	if (/Bomb/.test(item.name)) console.table(testObj);
+
 	const resetChecker = () => {
 		addProduct(item);
 		checkout && resetCheckout();
@@ -21,7 +33,12 @@ const ATC = props => {
 	};
 
 	const atcBtn = (
-		<Btn onClick={() => resetChecker()} className="btn btn-primary atc-btn">
+		<Btn
+			disabled={item.quantity - (inCart + item.bulk) < 0}
+			onClick={() => resetChecker()}
+			className={
+				item.quantity - (inCart + item.bulk) < 0 ? 'btn btn-secondary add-more-btn' : 'btn btn-primary atc-btn'
+			}>
 			Add To Cart
 		</Btn>
 	);
@@ -34,7 +51,12 @@ const ATC = props => {
 
 	const addMoreBtn =
 		inCart !== item.quantity ? (
-			<Btn disabled={inCart === item.quantity} onClick={() => addMore()} className="btn btn-success add-more-btn">
+			<Btn
+				disabled={item.quantity - (inCart + item.bulk) < 0}
+				onClick={() => addMore()}
+				className={
+					item.quantity - (inCart + item.bulk) < 0 ? 'btn btn-secondary add-more-btn' : 'btn btn-success add-more-btn'
+				}>
 				Add More
 			</Btn>
 		) : (
@@ -62,7 +84,9 @@ const ATC = props => {
 	return (
 		<>
 			{safeATC}
-			<span hidden={item.quantity - inCart > 15} className="sizeQty text-warning font-italic">
+			<span
+				hidden={item.quantity - inCart > 15 || item.quantity - inCart <= 0}
+				className="sizeQty text-warning font-italic">
 				{item.quantity - inCart} LEFT! {}
 			</span>
 		</>
