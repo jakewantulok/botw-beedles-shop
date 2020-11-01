@@ -60,7 +60,7 @@ export const productData = [
 			},
 			{
 				name: 'x20',
-				bulk: 10,
+				bulk: 20,
 				price: 900,
 			},
 		],
@@ -140,7 +140,7 @@ export const productData = [
 		photo: 'bomb_arrow.png',
 		description:
 			'Exploding arrows can take out a lot of enemies in a single shot. Be careful — you might accidentally hit a target that you don’t want to.',
-		quantity: 11,
+		quantity: 51,
 		price: 80,
 		sale: [
 			{
