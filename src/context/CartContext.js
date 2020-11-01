@@ -1,16 +1,16 @@
 import React, { createContext, useReducer } from 'react';
-import { CartReducer, sumItems } from './CartReducer';
+import { CartReducer } from './CartReducer';
 
 export const CartContext = createContext();
 
 const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
-
+const sumStorage = localStorage.getItem('sumItems') ? JSON.parse(localStorage.getItem('sumItems')) : [];
 const productStorage = localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : [];
 
 const initialState = {
 	cartItems: storage,
 	viewItem: productStorage,
-	sumItems: { ...sumItems(storage) },
+	sumItems: { ...sumStorage },
 	checkout: false,
 };
 

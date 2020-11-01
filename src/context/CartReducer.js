@@ -1,9 +1,17 @@
 // const productStorage = viewItem => localStorage.setItem('product', JSON.stringify(viewItem));
+let defaultSumData = {
+	cartCount: 0,
+	overallCost: 0,
+	overallReducedCost: 0,
+	overallSavings: 0,
+	overallSavingsPercent: 0,
+	subcategories: [],
+};
 
-export const sumItems = cartItems => {
+export const sumCart = cartItems => {
 	localStorage.setItem('cart', JSON.stringify(cartItems.length > 0 ? cartItems : []));
 
-	let sumItems = {
+	let sumData = {
 		cartCount: cartItems.length,
 		overallCost: 0,
 		overallReducedCost: 0,
@@ -12,10 +20,15 @@ export const sumItems = cartItems => {
 		subcategories: [],
 	};
 
+	if (!cartItems.length) {
+		localStorage.setItem('sumItems', JSON.stringify(defaultSumData));
+		return sumData;
+	}
+
 	const subcategories = [...new Set([...cartItems.map(product => product.subcategory)])];
 
 	for (let i in subcategories) {
-		sumItems.subcategories[i] = {
+		sumData.subcategories[i] = {
 			subcategory: subcategories[i],
 			itemCount: 0,
 			totalCost: 0,
@@ -23,34 +36,34 @@ export const sumItems = cartItems => {
 			savings: 0,
 			savingsPercent: 0,
 		};
+
 		const filteredItems = cartItems.filter(cartItem => cartItem.subcategory === subcategories[i]);
 		filteredItems.forEach(cartItem => {
 			const itemCount = cartItem.cart * cartItem.bulk;
 
-			sumItems.subcategories[i].itemCount += itemCount;
+			sumData.subcategories[i].itemCount += itemCount;
 
-			sumItems.subcategories[i].totalCost += itemCount * cartItem.originalPrice;
-			sumItems.overallCost += sumItems.subcategories[i].totalCost;
+			sumData.subcategories[i].totalCost += itemCount * cartItem.originalPrice;
+			sumData.overallCost += sumData.subcategories[i].totalCost;
 
-			sumItems.subcategories[i].reducedCost += cartItem.cart * cartItem.price;
-			sumItems.overallReducedCost += sumItems.subcategories[i].reducedCost;
+			sumData.subcategories[i].reducedCost += cartItem.cart * cartItem.price;
+			sumData.overallReducedCost += sumData.subcategories[i].reducedCost;
 		});
 
-		sumItems.subcategories[i].savings = sumItems.subcategories[i].totalCost - sumItems.subcategories[i].reducedCost;
+		sumData.subcategories[i].savings = sumData.subcategories[i].totalCost - sumData.subcategories[i].reducedCost;
 
-		sumItems.subcategories[i].savingsPercent = +(
-			(((sumItems.subcategories[i].savings * 100) / sumItems.subcategories[i].totalCost) * 100) /
+		sumData.subcategories[i].savingsPercent = +(
+			(((sumData.subcategories[i].savings * 100) / sumData.subcategories[i].totalCost) * 100) /
 			100
 		).toFixed(0);
 	}
 
-	sumItems.overallSavings = sumItems.overallCost - sumItems.overallReducedCost;
+	sumData.overallSavings = sumData.overallCost - sumData.overallReducedCost;
+	sumData.overallSavingsPercent = +((((sumData.overallSavings * 100) / sumData.overallCost) * 100) / 100).toFixed(0);
 
-	sumItems.overallSavingsPercent = +((((sumItems.overallSavings * 100) / sumItems.overallCost) * 100) / 100).toFixed(0);
+	localStorage.setItem('sumItems', JSON.stringify(sumData));
 
-	localStorage.setItem('sum', JSON.stringify(sumItems));
-
-	return sumItems;
+	return sumData;
 };
 
 export const CartReducer = (state, action) => {
@@ -163,51 +176,56 @@ export const CartReducer = (state, action) => {
 			return {
 				...state,
 				cartItems: [...updatedCart],
-				...sumItems([...updatedCart]),
+				sumItems: { ...sumCart([...updatedCart]) },
 			};
 		case 'DECREASE':
-			const putBack = qty + payload.bulk;
+			let putBack;
 			updatedCart = [
-				...cartItems.map(item =>
-					item.name === payload.name && item.cart > 0
-						? {
-								...item,
-								cart: item.cart - 1,
-								quantity: putBack,
-						  }
-						: item
-				),
+				...cartItems.map(item => {
+					if (item.name === payload.name && item.cart > 0) {
+						putBack = item.quantity + payload.bulk;
+						return {
+							...item,
+							cart: item.cart - 1,
+							quantity: putBack,
+						};
+					} else {
+						return item;
+					}
+				}),
 			];
 			updatedCart = [...updatedCart.filter(item => item.cart > 0)];
 			updatedCart = syncQty(payload.subcategory, updatedCart, putBack);
 			return {
 				...state,
 				cartItems: [...updatedCart],
-				...sumItems([...updatedCart]),
+				sumItems: { ...sumCart([...updatedCart]) },
 			};
 		case 'CHECKOUT':
 			return {
 				cartItems: [],
 				checkout: true,
-				...sumItems([]),
+				sumItems: { ...defaultSumData },
 			};
 		case 'RESET':
 			return {
 				...state,
-				...sumItems(state.cartItems),
 				cartItems: [...state.cartItems],
 				checkout: false,
+				sumItems: { ...sumCart(state.cartItems) },
 			};
 		case 'REMOVE_ITEM':
 			return {
 				...state,
-				...sumItems(state.cartItems.filter(item => item.name !== payload.name)),
 				cartItems: [...state.cartItems.filter(item => item.name !== payload.name)],
+				sumItems: { ...sumCart(state.cartItems.filter(item => item.name !== payload.name)) },
 			};
 		case 'CLEAR':
+			localStorage.setItem('cart', JSON.stringify([]));
+			localStorage.setItem('sumItems', JSON.stringify({ ...defaultSumData }));
 			return {
 				cartItems: [],
-				...sumItems([]),
+				sumItems: { ...defaultSumData },
 			};
 		default:
 			console.error('invalid action: ', action);
