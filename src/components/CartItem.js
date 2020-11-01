@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
-import { PlusIcon, MinusIcon, TrashIcon } from './Icons';
+import { PlusIcon, MinusIcon, TrashIcon, RupeeIcon } from './Icons';
 
 const Item = styled.div`
 	margin: 15px 0;
@@ -11,54 +11,84 @@ const Item = styled.div`
 	transition: background-color 0.5s;
 	transition: border 0.5s;
 	background-color: rgba(22, 22, 29, 50%);
+	& > div {
+		display: flex;
+		align-items: center;
 	}
+}
 `;
 
 const CartItem = ({ product }) => {
-	const { increase, decrease, removeProduct } = useContext(CartContext);
+	const { increase, decrease, removeProduct, cartItems, sumItems } = useContext(CartContext);
+	const { subcategories } = sumItems;
+	const filtered =
+		subcategories.length > 0 ? subcategories.filter(cartItem => cartItem.subcategory === product.subcategory) : [];
+
+	const count = filtered && filtered.length > 0 ? filtered[0].itemCount : 0;
+
+	// this is a way to check ahead if optionSelected can in fact be added to cart
+	const testObj = {
+		itemName: product.name,
+		itemQuantity: product.quantity,
+		itemBulk: product.bulk,
+		inCart: count,
+		expression: 'item.quantity - item.bulk',
+		result: product.quantity - product.bulk,
+		cartItems: cartItems,
+	};
+
+	if (/Bomb/.test(product.name)) console.table(testObj);
 
 	return (
 		<Item className="row no-gutters py-2">
 			<div className="col-sm-2 p-2">
 				<img src={'./img/products/' + product.photo} alt={product.name} width={75} />
 			</div>
+
 			<div className="col-sm-4 p-2">
 				<h4 className="mb-1">{product.name}</h4>
 			</div>
+
 			<div className="col-sm-3 p-2">
-				<h3 className="mb-0">{product.cart}</h3>
-				<button
-					onClick={() => increase(product)}
-					className={
-						product.cart !== product.quantity ? 'btn btn-primary btn-sm mr-2 mb-1' : 'btn btn-light btn-sm mr-2 mb-1'
-					}
-					disabled={product.cart === product.quantity}>
-					<PlusIcon width={20} />
-				</button>
-
-				{product.cart > 1 && (
-					<button onClick={() => decrease(product)} className="btn btn-danger btn-sm mb-1">
-						<MinusIcon width={20} />
+				<div style={{ width: '100px' }}>
+					<h3 className="mb-0">{product.cart}</h3>
+				</div>
+				<div>
+					<button
+						onClick={() => increase(product)}
+						className={
+							product.quantity - product.bulk < 0
+								? 'btn text-secondary ml-1 btn-sm mb-1'
+								: 'btn text-primary btn-sm ml-1 mb-1'
+						}
+						disabled={product.quantity - product.bulk < 0}>
+						<PlusIcon width={20} />
 					</button>
-				)}
 
-				{product.cart === 1 && (
-					<button onClick={() => removeProduct(product)} className="btn btn-danger btn-sm mb-1">
-						<TrashIcon width={20} />
-					</button>
-				)}
+					{product.cart > 1 && (
+						<button onClick={() => decrease(product)} className="btn text-danger btn-sm mb-1">
+							<MinusIcon width={20} />
+						</button>
+					)}
+
+					{product.cart === 1 && (
+						<button onClick={() => removeProduct(product)} className="btn text-danger btn-sm mb-1">
+							<TrashIcon width={20} />
+						</button>
+					)}
+				</div>
 			</div>
+
 			<div className="col-sm-3 p-2">
-				<p className="mb-1">
-					<span className="text-success" hidden={product.sale === product.price}>
-						{typeof product.sale === 'number' && product.sale}
-					</span>
-					<span
-						style={{ textDecoration: product.sale < product.price && 'line-through' }}
-						className={product.sale < product.price ? 'text-muted' : ''}>
-						{product.price}
-					</span>
-				</p>
+				<span className="text-success" hidden={product.sale === product.price}>
+					{typeof product.sale === 'number' && product.sale}
+				</span>
+				<h3
+					style={{ textDecoration: product.sale < product.price && 'line-through' }}
+					className={product.sale < product.price ? 'text-muted mb-0' : 'mb-0'}>
+					<RupeeIcon size="45px" />
+					{product.price}
+				</h3>
 			</div>
 		</Item>
 	);
