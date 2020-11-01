@@ -74,7 +74,7 @@ const CartGrid = () => {
 					<button type="button" className="btn btn-primary mb-2" onClick={handleCheckout}>
 						CHECKOUT
 					</button>
-					<button type="button" className="btn btn-outlineprimary btn-sm" onClick={clearCart}>
+					<button type="button" className="btn text-warning btn-sm font-italic" onClick={clearCart}>
 						CLEAR ALL
 					</button>
 				</div>
