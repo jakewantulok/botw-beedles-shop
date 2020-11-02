@@ -15,6 +15,11 @@ const Products = styled.div`
 	box-shadow: 5px 5px 10px #16161d50;
 `;
 
+const FilterWrapper = styled.div`
+	display: flex;
+	justify-content: flex-end;
+`;
+
 const Filter = styled.div`
 	position: fixed;
 	border: 1px solid white;
@@ -77,7 +82,7 @@ const ProductGrid = () => {
 
 	return (
 		<>
-			<div className="mt-5">
+			<div className="mt-5 mb-3 ml-3">
 				<h1>
 					{filter}
 					<ClearBtn hidden={filter === 'All'} onClick={() => handleFilter('All')}>
@@ -86,11 +91,10 @@ const ProductGrid = () => {
 				</h1>
 			</div>
 			<div className="row">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-9">
+				<div className="col-12 col-sm-12 col-md-12 col-lg-10">
 					<Products>{renderProducts}</Products>
 				</div>
-				<div className="col-0 col-sm-0 col-md-0 col-lg-1" />
-				<div className="col-0 col-sm-0 col-md-0 col-lg-2">
+				<FilterWrapper className="col-0 col-sm-0 col-md-0 col-lg-2">
 					<Filter>
 						<Dropdown hidden>
 							<Dropdown.Toggle variant="primary" id="dropdown-basic">
@@ -116,7 +120,7 @@ const ProductGrid = () => {
 							{filterBtns}
 						</FilterOptions>
 					</Filter>
-				</div>
+				</FilterWrapper>
 			</div>
 		</>
 	);
