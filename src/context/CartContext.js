@@ -3,6 +3,19 @@ import { CartReducer } from './CartReducer';
 
 export const CartContext = createContext();
 
+const defaultSumData = {
+	cartCount: 0,
+	overallCost: 0,
+	overallReducedCost: 0,
+	overallSavings: 0,
+	overallSavingsPercent: 0,
+	subcategories: [],
+};
+
+!localStorage.getItem('cart') && localStorage.setItem('cart', JSON.stringify([]));
+!localStorage.getItem('sumItems') && localStorage.setItem('sumItems', JSON.stringify(defaultSumData));
+!localStorage.getItem('product') && localStorage.setItem('product', JSON.stringify([]));
+
 const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 const sumStorage = localStorage.getItem('sumItems') ? JSON.parse(localStorage.getItem('sumItems')) : [];
 const productStorage = localStorage.getItem('product') ? JSON.parse(localStorage.getItem('product')) : [];

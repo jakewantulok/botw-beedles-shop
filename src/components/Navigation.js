@@ -19,7 +19,7 @@ const NavBrandWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	& .shop-title {
-		font-family: Sherwood;
+		font-family: 'Sherwood';
 		font-size: 30px;
 		font-weight: normal;
 	}
