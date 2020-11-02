@@ -7,8 +7,8 @@ export const Cart = () => {
 	const { cartItems, clearCart, checkout } = useContext(CartContext);
 
 	const cartEmptyMsg = (
-		<div id="cartEmptyMsg" className="p-3 text-center text-muted">
-			<p>Your cart is empty</p>
+		<div id="cartEmptyMsg" className="p-3 text-center">
+			<h2 className="mb-5">Your cart is empty</h2>
 			<Link to="/" className="btn btn-primary" onClick={clearCart}>
 				BACK TO HOME
 			</Link>
@@ -17,7 +17,7 @@ export const Cart = () => {
 
 	const buyMoreBtn = (
 		<div id="buyMoreBtn" className="p-3 text-center text-success">
-			<p>Checkout successful</p>
+			<h2 className="mb-5">Checkout successful</h2>
 			<Link to="/" className="btn btn-success" onClick={clearCart}>
 				BUY MORE
 			</Link>
@@ -26,7 +26,7 @@ export const Cart = () => {
 
 	return (
 		<>
-			<div className="mt-5">
+			<div className={!cartItems.length ? 'mt-5 text-center' : 'ml-3 mb-3 mt-5'}>
 				<h1>Cart</h1>
 			</div>
 			<div className="row justify-content-center">
