@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CartContext } from '../context/CartContext';
 import CartItem from './CartItem';
+import { RupeeIcon } from './Icons';
 
 const repeatedStyles = {
 	card: `
@@ -31,10 +32,28 @@ const Info = styled.div`
 
 const CheckoutCard = styled.div`
 	${repeatedStyles.card}
+	height: max-content;
 `;
 
+// const CouponWrapper = styled.div`
+// 	display: flex;
+// 	justify-content: center;
+// 	& input {
+// 		height: 45px;
+// 		width: calc(70% - 10px);
+// 		max-width: 150px;
+// 	}
+// 	& button {
+// 		height: 45px;
+// 		max-width: 65px;
+// 		width: 30%;
+// 		margin-left: 10px;
+// 	}
+// `;
+
 const CartGrid = () => {
-	const { cartItems, total, savings, savingsPercent, itemCount, handleCheckout, clearCart } = useContext(CartContext);
+	const { cartItems, sumItems, handleCheckout, clearCart } = useContext(CartContext);
+	const { overallReducedCost, overallSavings, overallSavingsPercent } = sumItems;
 
 	const Items = cartItems.map(product => <CartItem key={product.id} product={product} />);
 
@@ -61,23 +80,29 @@ const CartGrid = () => {
 				{Items}
 			</div>
 			<div className="col-12 col-sm-1" />
-			<CheckoutCard id="goToCheckout" className="col-12 col-sm-3">
-				<p className="mb-1">Total Items</p>
-				<h4 className="mb-3 txt-right">{itemCount}</h4>
-				<p className="mb-1">Total Payment</p>
-				<h3 className="m-0 txt-right">{total}</h3>
-				<hr className="my-4" />
-				<p hidden={savings <= 0} className="text-success font-italic">
-					You saved {savings} ({savingsPercent}%)
+			<CheckoutCard id="goToCheckout" className="col-12 col-sm-3 text-center">
+				<h2 className="mb-2">Cart Total: </h2>
+				<h3>
+					<RupeeIcon size="50px" />
+					{overallReducedCost}
+				</h3>
+				<p hidden={overallSavings <= 0} className="font-italic">
+					You saved <RupeeIcon />
+					{overallSavings} ( {overallSavingsPercent}% )
 				</p>
+				<hr className="my-4" />
+				{/* <CouponWrapper>
+					<input id="textInputCoupon" type="text" maxLength="10" />
+					<button className="btn btn-primary btn-sm">Apply</button>
+				</CouponWrapper> */}
 				<div className="text-center">
 					<button type="button" className="btn btn-primary mb-2" onClick={handleCheckout}>
 						CHECKOUT
 					</button>
-					<button type="button" className="btn text-warning btn-sm font-italic" onClick={clearCart}>
-						CLEAR ALL
-					</button>
 				</div>
+				<button type="button" className="btn text-warning btn-sm font-italic" onClick={clearCart}>
+					CLEAR ALL
+				</button>
 			</CheckoutCard>
 		</>
 	);
