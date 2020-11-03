@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
+import { BeedleContext } from '../context/BeedleContext';
 import styled from 'styled-components';
 import { CloseIcon } from './Icons';
-import { beedleQuotes } from '../data/beedleQuotes';
+import { beedleData } from '../data/beedleData';
 
 const SpeechBubble = styled.button`
 	font-style: italic;
@@ -41,10 +42,15 @@ const Offer = styled.div`
 `;
 
 const Quote = () => {
+	const { message, prevMessage, setPrevMsg } = useContext(BeedleContext);
+
+	// prevMessage.id !== message.id && setPrevMsg(message);
+
 	const num = 5;
-	const getQuote = beedleQuotes[num].quote;
-	const offer = beedleQuotes[num].offer;
-	const offerCode = beedleQuotes[num].offerCode;
+	const getQuote = prevMessage.id === message.id ? '' : message.quote;
+	// const getQuote = '';
+	const offer = beedleData[num].offer;
+	const offerCode = beedleData[num].offerCode;
 
 	const [isToggled, setIsToggled] = useState(false);
 
@@ -53,7 +59,7 @@ const Quote = () => {
 
 	return (
 		getQuote && (
-			<SpeechBubble style={{ display: isToggled && 'none' }} onClick={() => toggle()}>
+			<SpeechBubble style={{ display: isToggled && 'none' }} onClick={() => toggle()} hidden={getQuote === ''} >
 				<div>
 					<span>{getQuote}</span>
 				</div>

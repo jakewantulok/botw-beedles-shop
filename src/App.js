@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './components/global';
 import { lightTheme, darkTheme } from './components/theme';
 
+import BeedleContextProvider from './context/BeedleContext';
 import ProductsContextProvider from './context/ProductContext';
 import CartContextProvider from './context/CartContext';
 
@@ -24,12 +25,14 @@ const App = () => {
 	return (
 		<ThemeProvider theme={!toggleTheme ? lightTheme : darkTheme}>
 			<GlobalStyles />
+			<BeedleContextProvider>
 			<ProductsContextProvider>
 				<CartContextProvider>
 					<Navigation themeHandler={handleThemeChange} theme={!toggleTheme ? 'light' : 'dark'} />
 					<Router />
 				</CartContextProvider>
 			</ProductsContextProvider>
+			</BeedleContextProvider>
 		</ThemeProvider>
 	);
 };

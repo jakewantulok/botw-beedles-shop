@@ -1,4 +1,4 @@
-export const beedleQuotes = [
+export const beedleData = [
 	{
 		id: 0,
 		condition: 'greeting',
@@ -36,7 +36,6 @@ export const beedleQuotes = [
 		id: 6,
 		condition: 'return',
 		quote: "Oh! It's you again. Was there something you forgot to buy?",
-		gift: 'Ancient Arrow x1',
 	},
 	{
 		id: 7,

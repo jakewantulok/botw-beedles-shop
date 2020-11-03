@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { BeedleContext } from '../context/BeedleContext';
 import { CartContext } from '../context/CartContext';
 import CartItem from './CartItem';
 import { RupeeIcon } from './Icons';
@@ -52,10 +53,16 @@ const CheckoutCard = styled.div`
 // `;
 
 const CartGrid = () => {
+	const { setClearMsg } = useContext(BeedleContext);
 	const { cartItems, sumItems, handleCheckout, clearCart } = useContext(CartContext);
 	const { overallReducedCost, overallSavings, overallSavingsPercent } = sumItems;
 
 	const Items = cartItems.map(product => <CartItem key={product.id} product={product} />);
+
+	const handleClear = () => {
+		setClearMsg();
+		clearCart();
+	};
 
 	return (
 		<>
@@ -100,7 +107,7 @@ const CartGrid = () => {
 						CHECKOUT
 					</button>
 				</div>
-				<button type="button" className="btn text-warning btn-sm font-italic" onClick={clearCart}>
+				<button type="button" className="btn text-warning btn-sm font-italic" onClick={handleClear}>
 					CLEAR ALL
 				</button>
 			</CheckoutCard>
