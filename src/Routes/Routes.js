@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { Home } from '../pages/Home';
 import { Cart } from '../pages/Cart';
 import { PDP } from '../pages/PDP';
-import { PLP } from '../pages/PLP';
+// import { PLP } from '../pages/PLP';
 import { Missing } from '../pages/Missing';
 
 export const Routes = () => {

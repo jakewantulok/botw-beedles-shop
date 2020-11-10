@@ -1,6 +1,6 @@
-import React from 'react';
+//import React from 'react';
+//import { MenuIcon } from './Icons';
 import { createGlobalStyle } from 'styled-components';
-import { MenuIcon } from './Icons';
 
 export const GlobalStyles = createGlobalStyle`
   *,
