@@ -15,13 +15,19 @@ const repeatedStyles = {
 const Info = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	@media(max-width: 575px) {
+		display: none;
+	}
+	&:nth-child(1) {
+		margin-left: -15px;
+	}
 	& div {
 		padding-left: 0;
 		& div {
 			${repeatedStyles.card}
 		}
 		&:nth-child(3) div {
-			margin-right: -15px;
+			margin-right: -30px;
 			line-height: 0;
 		}
 		& :not(div) {
@@ -61,17 +67,17 @@ const CartGrid = () => {
 		<>
 			<div className="col-12 col-sm-8">
 				<Info>
-					<div className="col-12 col-sm-6">
+					<div className="col-0 col-sm-6">
 						<div>
 							<h4>Items</h4>
 						</div>
 					</div>
-					<div className="col-12 col-sm-3">
+					<div className="col-0 col-sm-3">
 						<div>
 							<h4>Qty</h4>
 						</div>
 					</div>
-					<div className="col-12 col-sm-3">
+					<div className="col-0 col-sm-3">
 						<div>
 							<h4>Price</h4>
 						</div>
